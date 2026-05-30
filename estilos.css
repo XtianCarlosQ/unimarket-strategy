@@ -2156,6 +2156,13 @@ caption {
   font-weight: 800;
 }
 
+.stack-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
 /* ==========================================================================
    MEDIA QUERIES (RESPONSIVO E IMPRESION)
    ========================================================================== */
@@ -2181,7 +2188,7 @@ caption {
     display: flex;
   }
   
-  .hero-grid, .architecture-layout, .moscow-stage, .chart-grid, .unicorn-panel {
+  .hero-grid, .architecture-layout, .moscow-stage, .chart-grid, .unicorn-panel, .stack-comparison-grid {
     grid-template-columns: 1fr;
   }
   

@@ -278,12 +278,87 @@
       <!-- SECCIÓN 3: APP Y ARQUITECTURA -->
       <section id="arquitectura" class="section">
         <div class="section-heading">
-          <span class="eyebrow"><i class="fas fa-layer-group"></i> Arquitectura & Stack Recomendado</span>
-          <h2>De Prototipo a Escala: Arquitectura robusta e institucional.</h2>
+          <span class="eyebrow"><i class="fas fa-layer-group"></i> Comparativa & Arquitectura</span>
+          <h2>Evolución Técnica: Del Prototipo al Ecosistema de Producción</h2>
           <p>
-            El código en `unimarket-mvp` validó la UI/UX inicial, pero el despliegue a producción exige separar experiencia móvil, backend, base de datos en tiempo real e Inteligencia Artificial.
+            Comparamos la viabilidad de la PWA inicial frente al nuevo ecosistema tecnológico robusto necesario para soportar miles de transacciones seguras en el campus.
           </p>
         </div>
+
+        <!-- COMPARATIVA: STACK RECOMENDADO VS PROTOTIPO -->
+        <div class="stack-comparison-grid">
+          <!-- COLUMNA 1: ESTADO ACTUAL (PWA) -->
+          <div class="glass-card glowing-border" style="border-left: 5px solid var(--danger); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                <span style="font-size: 24px; color: var(--danger);"><i class="fas fa-network-wired"></i></span>
+                <h3 style="font-size: 20px; font-weight: 800; margin: 0;">Estado Actual: PWA (MVP)</h3>
+              </div>
+              <p style="font-size: 13.5px; margin-bottom: 16px; color: var(--muted);">
+                <strong>Repositorio:</strong> <code>unimarket-mvp</code>
+              </p>
+              
+              <ul class="check-list" style="margin: 0 0 20px 0; padding: 0;">
+                <li style="font-size: 13.5px; color: var(--muted); margin-bottom: 8px;">Validación rápida de UI/UX en campo</li>
+                <li style="font-size: 13.5px; color: var(--muted); margin-bottom: 8px;">Despliegue inmediato en GitHub Pages</li>
+                <li style="font-size: 13.5px; color: var(--muted); margin-bottom: 8px;">Costo cero de infraestructura</li>
+              </ul>
+              
+              <hr style="border: 0; border-top: 1px solid var(--line); margin: 16px 0;">
+              
+              <h4 style="font-size: 14.5px; font-weight: 700; color: var(--ink); margin-bottom: 12px;"><i class="fas fa-times-circle" style="color: var(--danger); margin-right: 6px;"></i> Desventajas Críticas:</h4>
+              <ul style="padding-left: 20px; font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-bottom: 24px;">
+                <li><strong>Limitaciones severas en iOS</strong> (restricción de almacenamiento local y notificaciones push inactivas en background).</li>
+                <li><strong>Rendimiento inconsistente</strong> del chat en segundo plano, desgastando la inmediatez comercial.</li>
+                <li><strong>Complejidad extrema</strong> para implementar chat seguro y base de datos relacional robusta en una PWA estática.</li>
+              </ul>
+            </div>
+            
+            <div style="background: rgba(var(--purple-500-rgb), 0.03); border: 1.5px solid var(--line); border-left: 4px solid var(--gold); border-radius: var(--radius-md); padding: 14px 18px; font-size: 13px;">
+              <strong style="color: var(--ink); display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><i class="fas fa-info-circle" style="color: var(--gold);"></i> Conclusión Estratégica:</strong>
+              <p style="font-size: 12.5px; line-height: 1.5; color: var(--muted); margin: 0;">Excelente para validación inicial de mercado y recojo de feedback de primeros usuarios, pero <strong>no escalable</strong> para operar con una densidad de 1,000+ estudiantes activos concurrentes.</p>
+            </div>
+          </div>
+
+          <!-- COLUMNA 2: RECOMENDADO -->
+          <div class="glass-card glowing-border" style="border-left: 5px solid var(--green); display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                <span style="font-size: 24px; color: var(--green);"><i class="fas fa-rocket"></i></span>
+                <h3 style="font-size: 20px; font-weight: 800; margin: 0;">Recomendado: Flutter + FastAPI + Supabase</h3>
+              </div>
+              <p style="font-size: 13.5px; margin-bottom: 16px; color: var(--muted);">
+                <strong>Ecosistema Transaccional de Producción</strong>
+              </p>
+              
+              <ul style="padding-left: 0; list-style: none; margin: 0 0 20px 0; font-size: 13.5px; color: var(--muted); display: grid; gap: 8px;">
+                <li><strong style="color: var(--purple-700);"><i class="fas fa-mobile-alt" style="margin-right: 8px;"></i> Flutter:</strong> Apps 100% nativas iOS/Android, soporte nativo de push notifications.</li>
+                <li><strong style="color: var(--purple-700);"><i class="fas fa-bolt" style="margin-right: 8px;"></i> FastAPI:</strong> Backend Python ligero y veloz, idóneo para integrar IA/ML en campus.</li>
+                <li><strong style="color: var(--purple-700);"><i class="fas fa-database" style="margin-right: 8px;"></i> Supabase:</strong> Base de datos relacional segura con WebSockets en tiempo real integrados.</li>
+              </ul>
+              
+              <hr style="border: 0; border-top: 1px solid var(--line); margin: 16px 0;">
+              
+              <h4 style="font-size: 14.5px; font-weight: 700; color: var(--ink); margin-bottom: 12px;"><i class="fas fa-star" style="color: var(--green); margin-right: 6px;"></i> Beneficios Clave:</h4>
+              <ul style="padding-left: 20px; font-size: 13.5px; color: var(--muted); line-height: 1.6; margin-bottom: 24px;">
+                <li>Notificaciones push nativas en background para alertas de chat al instante.</li>
+                <li>Autenticación segura basada en tokens JWT con filtro regex estricto <code>@unmsm.edu.pe</code>.</li>
+                <li>WebSockets nativos para mensajería en tiempo real sin costo extra de servidores.</li>
+                <li>Escalabilidad horizontal e infraestructura en la nube modular para futura expansión.</li>
+              </ul>
+            </div>
+            
+            <div style="background: rgba(var(--purple-500-rgb), 0.03); border: 1.5px solid var(--line); border-left: 4px solid var(--green); border-radius: var(--radius-md); padding: 14px 18px; font-size: 13px;">
+              <strong style="color: var(--ink); display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><i class="fas fa-clock" style="color: var(--green);"></i> Inversión y Tiempos de Desarrollo:</strong>
+              <p style="font-size: 12.5px; line-height: 1.5; color: var(--muted); margin: 0;">Requiere un tiempo de desarrollo adicional estimado de <strong>12 semanas</strong> (estructurado en 6 sprints de 2 semanas en la planificación ágil), garantizando bases técnicas ultra sólidas y cero deuda técnica.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin: 34px 0 16px; font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 8px;"><i class="fas fa-project-diagram" style="color: var(--purple-700);"></i> De Prototipo a Escala: Arquitectura robusta e institucional</h3>
+        <p style="margin-bottom: 24px; font-size: 16px; color: var(--muted);">
+          El despliegue a producción exige separar la experiencia móvil del backend y de las bases de datos. A continuación, se detalla el diagrama interactivo de capas y el análisis técnico del stack recomendado:
+        </p>
 
         <div class="architecture-layout">
           <!-- DIAGRAMA -->

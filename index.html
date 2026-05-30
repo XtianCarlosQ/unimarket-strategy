@@ -429,6 +429,50 @@
             <button class="secondary-button" style="margin-top: 14px; width: 100%;" data-target="pitch"><i class="fas fa-volume-up"></i> Ver Guion</button>
           </div>
         </div>
+        <!-- ESTRATEGIA INTELIGENTE DE LANZAMIENTO Y COSTOS -->
+        <div class="glass-card glowing-border launch-strategy-card">
+          <div class="launch-strategy-header">
+            <span class="launch-strategy-icon"><i class="fas fa-store-slash"></i></span>
+            <h3>Estrategia de Lanzamiento Eficiente en Tiendas (Android & iOS)</h3>
+          </div>
+          <p class="launch-strategy-intro">
+            <strong>Jefa y Stakeholders:</strong> Para el piloto inicial de 1 a 50 usuarios beta, mi recomendación es <strong>no realizar publicaciones en las tiendas oficiales públicas</strong>. La burocracia de revisión y aprobación de Apple y Google no solo consume recursos, sino que retrasará severamente nuestro <em>Time-to-Market</em> inicial. Proponemos un esquema de <strong>distribución controlada cerrada</strong>.
+          </p>
+
+          <div class="launch-strategy-split">
+            <!-- SUB-CARD 1: ESTRATEGIA RECOMENDADA -->
+            <div class="launch-strategy-block">
+              <h4><i class="fas fa-route"></i> Distribución Controlada en Piloto</h4>
+              <ul>
+                <li>
+                  <strong><i class="fab fa-android" style="color: #3ddc84;"></i> En Android (Costo S/ 0):</strong>
+                  Generamos el archivo ejecutable <code>.apk</code> y lo distribuimos directamente a través de un enlace privado en nuestro **Supabase Storage** o mediante **Firebase App Distribution** para instalación con un solo clic.
+                </li>
+                <li>
+                  <strong><i class="fab fa-apple" style="color: #a3aaae;"></i> En iOS (TestFlight):</strong>
+                  Utilizaremos **Apple TestFlight**, la herramienta beta oficial que permite invitar hasta 10,000 usuarios beta usando solo sus correos institucionales, sin pasar por la revisión de la App Store pública.
+                  Requiere tener Apple Developer Program activo: USD 99/año.
+                </li>
+              </ul>
+            </div>
+
+            <!-- SUB-CARD 2: ANALISIS DE COSTOS Y MITIGACIÓN -->
+            <div class="launch-strategy-block cost-mitigation">
+              <div class="cost-table-mini">
+                <h4><i class="fas fa-coins"></i> Comparativa de Costos Oficiales</h4>
+                <ul>
+                  <li><strong>Google Play Console:</strong> USD 25 (Pago único de por vida).</li>
+                  <li><strong>Apple Developer Program:</strong> USD 99 (Pago anual obligatorio).</li>
+                </ul>
+              </div>
+              
+              <div class="mitigation-callout">
+                <strong><i class="fas fa-exclamation-triangle"></i> Plan de Mitigación (Costo S/ 0 en iOS):</strong>
+                <p>TestFlight requiere tener la cuenta anual de desarrollador de USD 99 activa. Si el presupuesto es estrictamente cero, mi recomendación es que <strong>el piloto corra 100% en Android</strong> y habilitemos la compilación de **Flutter Web** para los usuarios de iPhone, eliminando por completo cualquier gasto de arranque.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="feature-flow">
           <h3>Flujo Técnico Mínimo de Seguridad (MVP)</h3>
@@ -723,6 +767,10 @@
             <b>Costo de Servidores Piloto S/ 0</b>
             <span>Uso de las capas gratuitas (Free Tiers) de Supabase PostgreSQL, GitHub Actions y servidores Render para evitar quemar caja antes del PMF.</span>
           </article>
+          <article>
+            <b>Lanzamiento de Tiendas S/ 0</b>
+            <span>Estrategia de distribución controlada por APK directa (Android) y TestFlight/Web (iOS) en el piloto. Evitamos los USD 124 anuales y demoras de revisión.</span>
+          </article>
         </div>
       </section>
 
@@ -994,7 +1042,7 @@
             <p>“UniMarket no nace para competir contra WhatsApp, sino para estructurar la economía universitaria de forma confiable, privada y limpia.”</p>
           </article>
           <article class="pitch-card glowing-border">
-            <p>“El prototipo web actual cumplió su función. Para producción, migrar a Flutter + FastAPI + Supabase nos da notificaciones push e inmediatez sin costes iniciales de caja.”</p>
+            <p>“El prototipo cumplió su función. Para producción, migrar a Flutter+FastAPI+Supabase nos da robustez, y el piloto se distribuirá vía APK y TestFlight, logrando costo cero de tiendas y evitando burocracias.”</p>
           </article>
           <article class="pitch-card glowing-border">
             <p>“Excluir pasarelas de pago y delivery externo en la Fase 1 no es limitar el producto; es proteger el presupuesto y enfocarnos en lo que valida el negocio: liquidez y confianza.”</p>

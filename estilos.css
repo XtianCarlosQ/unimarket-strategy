@@ -2163,6 +2163,110 @@ caption {
   margin-bottom: 40px;
 }
 
+
+/* Card de Estrategia de Lanzamiento */
+.launch-strategy-card {
+  margin-top: 28px;
+  border-left: 6px solid var(--purple-700);
+}
+
+.launch-strategy-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.launch-strategy-icon {
+  font-size: 28px;
+  color: var(--purple-700);
+  transition: var(--transition);
+}
+
+.launch-strategy-intro {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.launch-strategy-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 24px;
+  margin-bottom: 8px;
+}
+
+.launch-strategy-block {
+  background: rgba(var(--purple-500-rgb), 0.02);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  transition: var(--transition);
+}
+
+.launch-strategy-block h4 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.launch-strategy-block h4 i {
+  color: var(--purple-700);
+}
+
+.launch-strategy-block ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.65;
+  display: grid;
+  gap: 10px;
+}
+
+.launch-strategy-block li strong i {
+  margin-right: 4px;
+}
+
+.launch-strategy-block.cost-mitigation {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mitigation-callout {
+  background: rgba(239, 68, 68, 0.04);
+  border-left: 3px solid var(--danger);
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.45;
+  margin-top: 14px;
+}
+
+.mitigation-callout strong {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.mitigation-callout strong i {
+  color: var(--danger);
+  margin-right: 4px;
+}
+
+.mitigation-callout p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+
 /* ==========================================================================
    MEDIA QUERIES (RESPONSIVO E IMPRESION)
    ========================================================================== */
@@ -2188,7 +2292,7 @@ caption {
     display: flex;
   }
   
-  .hero-grid, .architecture-layout, .moscow-stage, .chart-grid, .unicorn-panel, .stack-comparison-grid {
+  .hero-grid, .architecture-layout, .moscow-stage, .chart-grid, .unicorn-panel, .stack-comparison-grid, .launch-strategy-split {
     grid-template-columns: 1fr;
   }
   

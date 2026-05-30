@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="original" data-mode="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Presentación interactiva estratégica de UniMarket: arquitectura tech, MoSCoW, Scrum, finanzas, marketing de guerrilla, UX/UI, paletas y roadmap." />
+  <title>UniMarket | Presentación Estratégica Ejecutiva</title>
+  <link rel="stylesheet" href="estilos.css" />
+  <!-- FontAwesome para iconos de alta calidad estilo tech -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- Gradientes de fondo decorativos premium -->
+  <div class="bg-gradient-accent" aria-hidden="true"></div>
+
+  <div class="presentation-shell">
+    
+    <!-- BARRA LATERAL NAVEGABLE -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-block">
+        <div class="brand-icon" aria-hidden="true">
+          <!-- Bolsa UniMarket en SVG dinámico con el color primario de la paleta -->
+          <svg viewBox="0 0 64 64" role="img" aria-label="Bolsa UniMarket">
+            <defs>
+              <linearGradient id="bagGradient" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="var(--purple-700)" />
+                <stop offset="100%" stop-color="var(--purple-900)" />
+              </linearGradient>
+            </defs>
+            <path d="M16 24h32l-3 32H19L16 24Z" fill="url(#bagGradient)" />
+            <path d="M24 24v-5c0-5 4-9 8-9s8 4 8 9v5" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+            <path d="M27 36c2.5 4 7.5 4 10 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div>
+          <strong>UNIMARKET</strong>
+          <span>Presentación Ejecutiva • v2026</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu" aria-label="Secciones de la agenda estratégica">
+        <button class="nav-link active" data-target="inicio"><span>01</span>Resumen Ejecutivo</button>
+        <button class="nav-link" data-target="diagnostico"><span>02</span>Diagnóstico & Campo</button>
+        <button class="nav-link" data-target="arquitectura"><span>03</span>Stack & Arquitectura</button>
+        <button class="nav-link" data-target="moscow"><span>04</span>MoSCoW & Prioridades</button>
+        <button class="nav-link" data-target="scrum"><span>05</span>Scrum & Planificación</button>
+        <button class="nav-link" data-target="finanzas"><span>06</span>Dashboard Financiero</button>
+        <button class="nav-link" data-target="marketing"><span>07</span>Diseño, UX & Paletas</button>
+        <button class="nav-link" data-target="brainstorming"><span>08</span>Valor & Campus OS</button>
+        <button class="nav-link" data-target="validacion"><span>09</span>Gobernanza & Riesgos</button>
+        <button class="nav-link" data-target="pitch"><span>10</span>Pitch & Plan de Acción</button>
+      </nav>
+
+      <!-- CONTROLES FLOTANTES EN SIDEBAR -->
+      <div class="sidebar-controls">
+        <div class="mode-toggle-wrap">
+          <span class="mode-toggle-label">Apariencia</span>
+          <button id="themeModeBtn" class="mode-switch-btn" aria-label="Alternar modo claro u oscuro">
+            <i class="fas fa-moon"></i> Modo Oscuro
+          </button>
+        </div>
+        <div class="palette-quick-wrap" style="margin-top: 10px; display: grid; gap: 8px;">
+          <span class="mode-toggle-label" style="font-size: 12.5px; font-weight: 700; color: var(--ink);">Paleta Visual</span>
+          <div class="quick-palettes" style="display: flex; gap: 8px; justify-content: space-between; align-items: center; background: rgba(var(--card-rgb), 0.5); padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid var(--line);">
+            <button class="quick-palette-dot" data-quick-palette="original" title="Original unimarket-mvp" style="background: linear-gradient(135deg, #7c3aed, #f45dbb);"></button>
+            <button class="quick-palette-dot" data-quick-palette="nahimic" title="Nahimic CyberTech" style="background: linear-gradient(135deg, #0284c7, #22d3ee);"></button>
+            <button class="quick-palette-dot" data-quick-palette="premium" title="Premium Indigo" style="background: linear-gradient(135deg, #4f46e5, #10b981);"></button>
+            <button class="quick-palette-dot" data-quick-palette="shadcn" title="Shadcn Zinc" style="background: linear-gradient(135deg, #27272a, #fafafa);"></button>
+            <button class="quick-palette-dot" data-quick-palette="unmsm" title="UNMSM Modern Tech" style="background: linear-gradient(135deg, #003366, #fbbf24);"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button onclick="window.print()" class="ghost-button small" style="width: 100%; border-radius: 12px;">
+          <i class="fas fa-print"></i> Exportar PDF / Imprimir
+        </button>
+        <small>Especialmente diseñado para comités de inversión, jefa del proyecto y dirección técnica.</small>
+      </div>
+    </aside>
+
+    <!-- AREA DE CONTENIDO PRINCIPAL -->
+    <main class="content-area">
+      
+      <!-- TOPBAR FIJA CON PROGRESO -->
+      <header class="topbar">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir barra lateral">☰</button>
+        <div class="progress-wrap" aria-hidden="true">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="top-actions">
+          <select id="scenarioSelect" aria-label="Seleccionar escenario financiero para simulación">
+            <option value="base">Escenario Medio</option>
+            <option value="pesimista">Escenario Pesimista</option>
+            <option value="optimista">Escenario Esperanzador</option>
+          </select>
+          <button class="ghost-button small" id="nextSection" style="border-radius: 12px;">Siguiente <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </header>
+
+      <!-- SECCIÓN 1: RESUMEN EJECUTIVO -->
+      <section id="inicio" class="section hero-section active">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow"><i class="fas fa-bullseye"></i> Propuesta Estratégica, Técnica y Comercial</span>
+            <h1>UniMarket: Convertir el caos de WhatsApp en un ecosistema universitario confiable.</h1>
+            <p class="hero-lead">
+              Nuestra oportunidad central no es competir con WhatsApp, sino **estructurar el caos comercial** dentro de la UNMSM, garantizando cercanía estudiantil, inmediatez diaria y la máxima confianza en el campus.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" data-target="moscow"><i class="fas fa-tasks"></i> Ver MoSCoW</button>
+              <button class="secondary-button" data-target="finanzas"><i class="fas fa-chart-line"></i> Simular Finanzas</button>
+            </div>
+            
+            <div class="metric-strip">
+              <article class="metric-card glowing-border">
+                <b>50</b>
+                <span>Alumnos en Piloto Controlado</span>
+              </article>
+              <article class="metric-card glowing-border">
+                <b>24h</b>
+                <span>Duración Efímera de Oferta</span>
+              </article>
+              <article class="metric-card glowing-border">
+                <b>12</b>
+                <span>Semanas para MVP Estable</span>
+              </article>
+              <article class="metric-card glowing-border">
+                <b>S/ 7</b>
+                <span>Suscripción Premium Mensual</span>
+              </article>
+            </div>
+          </div>
+
+          <!-- MOCKUP DEL DISPOSITIVO MÓVIL (WOW FACTOR) -->
+          <div class="device-showcase" aria-label="Maqueta móvil interactiva del marketplace UniMarket">
+            <div class="phone-mockup">
+              <div class="phone-header">
+                <span>9:41 AM</span>
+                <span><i class="fas fa-wifi"></i> <i class="fas fa-battery-three-quarters"></i></span>
+              </div>
+              <div class="app-hero-mini">
+                <strong>UniMarket</strong>
+                <small>Compra y vende de forma segura en la UNMSM</small>
+              </div>
+              <div class="mini-search"><i class="fas fa-search"></i> Buscar "postres en Letras..."</div>
+              <div class="mini-tabs">
+                <span>🍪 Postres</span>
+                <span>👕 Moda</span>
+                <span>📚 Libros</span>
+              </div>
+              <div class="mini-products">
+                <div><i>🍰</i><b>Cheesecake Fresa</b><small>S/ 6 • Hoy en Odonto</small></div>
+                <div><i>💍</i><b>Anillo Acero</b><small>S/ 12 • En Biblioteca</small></div>
+                <div><i>📚</i><b>Tutoría Física II</b><small>S/ 25/h • Pabellón B</small></div>
+              </div>
+              <div class="mini-chat"><i class="fas fa-shield-halved"></i> Chat seguro sin exponer tu número</div>
+            </div>
+            <div class="floating-card top glowing-border">
+              <i class="fas fa-shield-alt"></i> Escudo Sanmarquino
+              <span>Validación de identidad institucional</span>
+            </div>
+            <div class="floating-card bottom glowing-border">
+              <i class="fas fa-hourglass-half"></i> Pizarra Efímera
+              <span>Solo stock disponible en el día</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-cards">
+          <article class="glass-card">
+            <span class="icon" style="color: var(--danger);"><i class="fas fa-exclamation-circle"></i></span>
+            <h3>El Problema</h3>
+            <p>WhatsApp concentra la oferta, pero satura de spam, dificulta la búsqueda de categorías, expone la privacidad telefónica y carece de trazabilidad de stock real.</p>
+          </article>
+          <article class="glass-card">
+            <span class="icon" style="color: var(--green);"><i class="fas fa-check-circle"></i></span>
+            <h3>La Solución</h3>
+            <p>Marketplace universitario privado, verificado por correo institucional, donde las publicaciones expiran a las 24 horas y las entregas se coordinan en puntos seguros.</p>
+          </article>
+          <article class="glass-card">
+            <span class="icon" style="color: var(--purple-700);"><i class="fas fa-compass"></i></span>
+            <h3>El Camino a Escala</h3>
+            <p>Primero validar la liquidez comercial y confianza en la UNMSM; luego escalar a tutorías B2C y finalmente licenciar la suite a otras universidades como Campus OS.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: DIAGNÓSTICO Y EVIDENCIA -->
+      <section id="diagnostico" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-search"></i> Estudio de Campo y Evidencia</span>
+          <h2>Diagnóstico: La economía universitaria ya existe, pero opera en el canal equivocado.</h2>
+          <p>
+            Nuestros hallazgos demuestran que tanto compradores como vendedores sufren una fricción operativa diaria que WhatsApp no está diseñado para resolver.
+          </p>
+        </div>
+
+        <div class="two-column">
+          <!-- CARD COMPRADOR -->
+          <article class="persona-card">
+            <div class="persona-visual">🧑‍🎓</div>
+            <div class="persona-content">
+              <span class="chip"><i class="fas fa-graduation-cap"></i> Estudiante Comprador</span>
+              <h3>Búsqueda frustrada entre spam</h3>
+              <p>Necesita encontrar comida, copias o regalos de forma rápida en sus 10 minutos de cambio de clase, pero pierde tiempo filtrando decenas de chats irrelevantes.</p>
+              <ul class="check-list">
+                <li>Desorden absoluto y falta de categorías de productos.</li>
+                <li>Incertidumbre sobre si el vendedor tiene stock real hoy.</li>
+                <li>Inseguridad al no saber la reputación o identidad del vendedor.</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- CARD VENDEDOR -->
+          <article class="persona-card">
+            <div class="persona-visual">👩‍💼</div>
+            <div class="persona-content">
+              <span class="chip"><i class="fas fa-briefcase"></i> Estudiante Emprendedor</span>
+              <h3>Compitiendo contra el scroll</h3>
+              <p>Tiene que publicar repetidas veces al día en múltiples grupos de WhatsApp para no quedar enterrado en el historial, coordinando entregas manualmente mientras asiste a clase.</p>
+              <ul class="check-list">
+                <li>Estrés extremo por coordinación manual de entregas y stock.</li>
+                <li>Pérdida rápida de visibilidad en grupos masivos.</li>
+                <li>Riesgo de seguridad al exponer su número personal de teléfono.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <!-- POV BOARD -->
+        <div class="insight-board glowing-border">
+          <div class="board-header">
+            <h3>POV Estratégico (Punto de Vista)</h3>
+            <span>Usuario Comprador + Vendedor</span>
+          </div>
+          <p class="quote">
+            "Los estudiantes sanmarquinos necesitan un sistema comercial organizado y exclusivo dentro de su campus, porque actualmente dependen de grupos saturados de WhatsApp donde la información caduca rápido y no hay garantías de confianza."
+          </p>
+          
+          <div class="venn-wrap" aria-label="Diagrama de intersección del comprador y vendedor en UniMarket">
+            <div class="venn one">
+              <b>Comprador</b>
+              <span>Rapidez, filtros, disponibilidad y reputación</span>
+            </div>
+            <div class="venn two">
+              <b>Vendedor</b>
+              <span>Visibilidad sin spam, menor desgaste y control</span>
+            </div>
+            <div class="venn-core">
+              UniMarket
+              <br><small>Confianza Organizada</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="evidence-grid">
+          <article>
+            <b>Insight 1: Liquidez Local</b>
+            <span>La app no crea la comunidad comercial; organiza y protege las transacciones que ya ocurren físicamente dentro de ella.</span>
+          </article>
+          <article>
+            <b>Insight 2: Confianza Cerrada</b>
+            <span>El factor crítico de seguridad no es la estética; es la garantía de identidad estudiantil mediante verificación institucional.</span>
+          </article>
+          <article>
+            <b>Insight 3: Valor Efímero</b>
+            <span>Las 24h de expiración responden de forma directa al problema de stock real diario de los vendedores de comida fresca.</span>
+          </article>
+          <article>
+            <b>Insight 4: Logística Cambio Clase</b>
+            <span>El cambio de pabellones en los recesos define el éxito del intercambio. La ubicación física es clave del negocio.</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: APP Y ARQUITECTURA -->
+      <section id="arquitectura" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-layer-group"></i> Arquitectura & Stack Recomendado</span>
+          <h2>De Prototipo a Escala: Arquitectura robusta e institucional.</h2>
+          <p>
+            El código en `unimarket-mvp` validó la UI/UX inicial, pero el despliegue a producción exige separar experiencia móvil, backend, base de datos en tiempo real e Inteligencia Artificial.
+          </p>
+        </div>
+
+        <div class="architecture-layout">
+          <!-- DIAGRAMA -->
+          <div class="architecture-diagram">
+            <div class="layer">
+              <span>📱 Flutter App</span>
+              <small>Android • iOS • Flutter Web nativo</small>
+            </div>
+            <div class="connector"></div>
+            <div class="layer">
+              <span>⚡ FastAPI Backend</span>
+              <small>Reglas de Negocio • API REST • RAG AI Endpoint</small>
+            </div>
+            <div class="connector"></div>
+            <div class="layer">
+              <span>🗄️ Supabase Cloud</span>
+              <small>PostgreSQL • Auth JWT • WebSockets Realtime</small>
+            </div>
+            <div class="connector"></div>
+            <div class="layer">
+              <span>🔄 CI/CD & Ops</span>
+              <small>GitHub Actions • Docker • Métricas MVP</small>
+            </div>
+          </div>
+
+          <!-- STACK EXPLICACIÓN -->
+          <div class="stack-cards">
+            <article>
+              <div class="stack-icon" style="color: #0284c7;"><i class="fa-solid fa-mobile-screen-button"></i></div>
+              <h3>Flutter para Experiencia Nativa</h3>
+              <p>Permite compilar una sola base de código para Android e iOS, ofreciendo el mejor rendimiento gráfico en dispositivos de gama media y notificaciones push nativas en background (críticas para el chat).</p>
+            </article>
+            <article>
+              <div class="stack-icon" style="color: #0d9488;"><i class="fa-solid fa-bolt"></i></div>
+              <h3>FastAPI para Reglas y Agentes de IA</h3>
+              <p>Backend en Python ultra rápido. Permite integrar nativamente librerías de Inteligencia Artificial para el motor de búsqueda semántica y moderación automática de contenido inapropiado sin sobrecargar la base de datos.</p>
+            </article>
+            <article>
+              <div class="stack-icon" style="color: var(--pink);"><i class="fa-solid fa-database"></i></div>
+              <h3>Supabase como Backend-as-a-Service</h3>
+              <p>Asegura una base de datos PostgreSQL relacional real con 500 MB en capa gratuita (perfecto para el piloto), autenticación por JWT integrada y canales WebSockets para mensajería instantánea sin coste de servidor.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="decision-grid">
+          <div class="decision-card yes">
+            <h3>¿Por qué sí migrar al stack?</h3>
+            <p>Porque la PWA actual tiene severas limitaciones en iOS (almacenamiento local restringido, inactividad de notificaciones push de background y rendimiento inconsistente).</p>
+            <ul>
+              <li>Notificaciones push nativas al instante.</li>
+              <li>Menor deuda técnica al escalar a 1,000+ alumnos.</li>
+              <li>Mayor control sobre la seguridad de perfiles.</li>
+            </ul>
+          </div>
+          <div class="decision-card caution">
+            <h3>¿Por qué no construir todo de golpe?</h3>
+            <p>Un marketplace vive de la liquidez comercial. Desarrollar sobreingeniería compleja sin validar primero la densidad comercial destruye presupuesto y retrasa el lanzamiento.</p>
+            <ul>
+              <li>No pasarelas de pago reguladas en Fase 1.</li>
+              <li>No delivery externo de campus (costos operativos).</li>
+              <li>Foco estricto en el núcleo de comunicación.</li>
+            </ul>
+          </div>
+          <div class="decision-card stakeholder">
+            <h3>Mensaje para Stakeholders</h3>
+            <p><strong>"No estamos cambiando de tecnología por capricho; estamos separando la interfaz del negocio para asegurar un piloto de bajo costo pero altamente robusto y escalable."</strong></p>
+            <button class="secondary-button" style="margin-top: 14px; width: 100%;" data-target="pitch"><i class="fas fa-volume-up"></i> Ver Guion</button>
+          </div>
+        </div>
+
+        <div class="feature-flow">
+          <h3>Flujo Técnico Mínimo de Seguridad (MVP)</h3>
+          <div class="flow-row">
+            <span>Correo @unmsm.edu.pe</span>
+            <b>→</b>
+            <span>Validación OTP JWT</span>
+            <b>→</b>
+            <span>Publicación temporal (TTL 24h)</span>
+            <b>→</b>
+            <span>Mensajería en Tiempo Real</span>
+            <b>→</b>
+            <span>Punto Seguro Pactado</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 4: MOSCOW Y PRIORIZACIÓN -->
+      <section id="moscow" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-list-check"></i> Framework de Priorización</span>
+          <h2>MoSCoW: Decidir con rigor comercial qué entra en el primer ciclo y qué espera.</h2>
+          <p>
+            Usar MoSCoW alinea el backlog de desarrollo con los objetivos de la jefa del proyecto y las expectativas de los inversores.
+          </p>
+        </div>
+
+        <!-- TOOLBAR INTERACTIVO DE MOSCOW -->
+        <div class="moscow-toolbar" role="tablist" aria-label="Categorías de priorización MoSCoW">
+          <button class="moscow-tab active" data-moscow="must">Must Have (Obligatorio)</button>
+          <button class="moscow-tab" data-moscow="should">Should Have (Debería tener)</button>
+          <button class="moscow-tab" data-moscow="could">Could Have (Podría tener)</button>
+          <button class="moscow-tab" data-moscow="wont">Won't Have (Excluido v1)</button>
+        </div>
+
+        <!-- ESCENARIO DINÁMICO DE MOSCOW -->
+        <div class="moscow-stage" id="moscowStage"></div>
+
+        <h3 style="margin: 28px 0 16px;"><i class="fas fa-cubes"></i> Matriz de ROI, Impacto y Complejidad Técnica</h3>
+        <div class="table-wrap">
+          <table>
+            <caption>Evaluación estratégica de viabilidad de los features</caption>
+            <thead>
+              <tr>
+                <th>Feature Estratégico</th>
+                <th>Impacto Comercial</th>
+                <th>Complejidad Dev</th>
+                <th>Retorno ROI</th>
+                <th>Estado Priorizado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Filtro Correo Institucional</strong></td>
+                <td>Muy Alto (Confianza)</td>
+                <td>Baja (Regex + OTP)</td>
+                <td>★★★★★</td>
+                <td><span class="chip" style="margin: 0; background: var(--pink-soft); color: var(--pink)">MUST HAVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Publicación Efímera (24h)</strong></td>
+                <td>Alto (FOMO + Datos limpios)</td>
+                <td>Media (BD TTL logic)</td>
+                <td>★★★★☆</td>
+                <td><span class="chip" style="margin: 0; background: var(--pink-soft); color: var(--pink)">MUST HAVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Chat WebSocket Seguro</strong></td>
+                <td>Alto (Privacidad)</td>
+                <td>Media (Realtime sockets)</td>
+                <td>★★★★★</td>
+                <td><span class="chip" style="margin: 0; background: var(--pink-soft); color: var(--pink)">MUST HAVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Buscador Cognitivo con IA</strong></td>
+                <td>Muy Alto (Intención semántica)</td>
+                <td>Alta (FastAPI + Embeddings)</td>
+                <td>★★★☆☆</td>
+                <td><span class="chip" style="margin: 0; background: var(--lilac-200); color: var(--purple-700)">SHOULD HAVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Filtro Geográfico por Pabellón</strong></td>
+                <td>Medio-Alto (Ahorro de tiempo)</td>
+                <td>Media (Geotags de campus)</td>
+                <td>★★★★☆</td>
+                <td><span class="chip" style="margin: 0; background: var(--lilac-200); color: var(--purple-700)">SHOULD HAVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Sistema de Reputación Básica</strong></td>
+                <td>Alto (Prueba social)</td>
+                <td>Media (Valoración BD)</td>
+                <td>★★★★☆</td>
+                <td><span class="chip" style="margin: 0; background: var(--lilac-200); color: var(--purple-700)">SHOULD HAVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Penalización por Plantón</strong></td>
+                <td>Medio (Gobernanza)</td>
+                <td>Alta (Algoritmo reputación)</td>
+                <td>★★☆☆☆</td>
+                <td><span class="chip" style="margin: 0; background: #e0f2fe; color: #0284c7">COULD HAVE</span></td>
+              </tr>
+              <tr>
+                <td><strong>Pasarela de Pago Escrow</strong></td>
+                <td>Medio-Bajo (Comodidad)</td>
+                <td>Muy Alta (Regulaciones/APIs)</td>
+                <td>★☆☆☆☆</td>
+                <td><span class="chip" style="margin: 0; background: #fef2f2; color: var(--danger)">WON'T HAVE v1</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="moscow-matrix">
+          <div class="matrix-card high-impact">
+            <h3>Alto Impacto / Bajo Riesgo</h3>
+            <p>Autenticación estudiantil, feed efímero de 24h, buscador por categorías, chat seguro en tiempo real.</p>
+          </div>
+          <div class="matrix-card high-risk">
+            <h3>Alto Impacto / Riesgo Medio</h3>
+            <p>Buscador semántico RAG con Inteligencia Artificial, valoraciones, mapas interactivos de pabellones.</p>
+          </div>
+          <div class="matrix-card low-impact">
+            <h3>Impacto Diferido</h3>
+            <p>Gamificación por insignias de campus, dashboard avanzado del vendedor, historias de video efímeras.</p>
+          </div>
+          <div class="matrix-card excluded">
+            <h3>Excluido en Lanzamiento</h3>
+            <p>Delivery propio fuera de la UNMSM, procesamiento de tarjetas de crédito externas y multicampus.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 5: SCRUM Y SPRINTS -->
+      <section id="scrum" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-rotate"></i> Metodologías Ágiles</span>
+          <h2>Scrum Aplicado: Progreso medible en ciclos cortos de 2 semanas.</h2>
+          <p>
+            La jefa y los administradores gestionan los objetivos del negocio; el programador garantiza la robustez técnica del producto.
+          </p>
+        </div>
+
+        <div class="roles-grid">
+          <article>
+            <div class="stack-icon" style="color: var(--purple-700);"><i class="fas fa-laptop-code"></i></div>
+            <h3>Scrum Master Técnico</h3>
+            <p><strong>Dev (Tú):</strong> Responsable del diseño de arquitectura, integraciones con base de datos, API de moderación y entrega funcional de código.</p>
+          </article>
+          <article>
+            <div class="stack-icon" style="color: var(--pink);"><i class="fas fa-user-tie"></i></div>
+            <h3>Product Owner & Negocio</h3>
+            <p><strong>Tu Jefa / Líder:</strong> Coordina la priorización del backlog, valida los copys comerciales, recluta estudiantes piloto y aprueba criterios de éxito.</p>
+          </article>
+          <article>
+            <div class="stack-icon" style="color: var(--gold);"><i class="fas fa-users-viewfinder"></i></div>
+            <h3>Stakeholders Consultivos</h3>
+            <p><strong>Comunidad / Inversores:</strong> Aportan feedback constante en las revisiones de sprint para asegurar la adopción orgánica real en el campus.</p>
+          </article>
+        </div>
+
+        <div class="scrum-board">
+          <div class="scrum-column">
+            <h3>Ceremonias Clave</h3>
+            <ul class="check-list">
+              <li><strong>Sprint Planning:</strong> 1 hora para comprometer features del MoSCoW.</li>
+              <li><strong>Daily Standup:</strong> Sync de 10 min por Slack/WhatsApp.</li>
+              <li><strong>Sprint Review:</strong> Demo mensual funcional ante la jefa.</li>
+              <li><strong>Sprint Retrospective:</strong> Optimizar velocidad y corregir trabas.</li>
+            </ul>
+          </div>
+          <div class="scrum-column">
+            <h3>Métricas de Éxito</h3>
+            <ul class="check-list">
+              <li><strong>Velocity Target:</strong> ≥85% de puntos entregados.</li>
+              <li><strong>Calidad Técnica:</strong> Bug escape rate en piloto ≤5%.</li>
+              <li><strong>Adopción:</strong> Registro a publicación en menos de 24 horas.</li>
+              <li><strong>Frecuencia:</strong> Al menos 2 accesos por semana de usuarios beta.</li>
+            </ul>
+          </div>
+          <div class="scrum-column">
+            <h3>Definición de Terminado</h3>
+            <ul class="check-list">
+              <li>Código integrado en repositorio Git.</li>
+              <li>Comprobación en compilación responsive.</li>
+              <li>Validado el funcionamiento sin caídas.</li>
+              <li>Aprobado formalmente por la PO (Jefa).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TIMELINE DE SPRINTS INTERACTIVO -->
+        <h3 style="margin: 28px 0 16px;"><i class="fas fa-calendar-alt"></i> Roadmap de Ejecución Incremental (12 Semanas)</h3>
+        
+        <div class="timeline" id="sprintTimeline" role="tablist" aria-label="Roadmap de sprints de UniMarket"></div>
+
+        <!-- PANEL DE DETALLE DE SPRINT SELECCIONADO -->
+        <div class="sprint-details glowing-border" id="sprintDetails"></div>
+
+        <!-- DASHBOARD DE COMUNICACIÓN EJECUTIVA -->
+        <div class="unicorn-panel" style="margin-top: 24px;">
+          <div>
+            <span class="eyebrow"><i class="fas fa-handshake"></i> Gobernanza de Negocio</span>
+            <h3>Dashboard de Gobernanza de la Jefa</h3>
+            <p>
+              Diseñamos reportes ejecutivos cortos de 1 página cada 2 semanas. El objetivo es hablar el mismo idioma comercial: progreso real frente a hitos de captación estudiantil, no tecnicismos.
+            </p>
+          </div>
+          <div class="unicorn-steps" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+            <span>📋 Reporte de Sprint de 1 página</span>
+            <span>📊 Métricas de adopción estudiantil</span>
+            <span>🚨 Alertas rápidas de riesgos u obstáculos</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 6: FINANZAS AÑO 1 -->
+      <section id="finanzas" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-wallet"></i> Simulación Financiera</span>
+          <h2>Proyecciones Financieras Año 1: Viabilidad económica del Ecosistema.</h2>
+          <p>
+            Diseñamos un modelo de negocio sostenible desde el piloto, diversificando ingresos en suscripciones, publicidad y microcomisiones sin gastar en servidores caros.
+          </p>
+        </div>
+
+        <!-- CONTROLES FINANCIEROS -->
+        <div class="financial-controls">
+          <button class="scenario-btn" data-scenario="pesimista">Escenario Pesimista</button>
+          <button class="scenario-btn active" data-scenario="base">Escenario Medio</button>
+          <button class="scenario-btn" data-scenario="optimista">Escenario Esperanzador</button>
+        </div>
+
+        <!-- CARDS DE METRICAS FINANCIERAS -->
+        <div class="finance-kpis" id="financeKpis"></div>
+
+        <!-- GRÁFICOS CANVAS INTEGRADOS -->
+        <div class="chart-grid">
+          <article class="chart-card glowing-border">
+            <div class="chart-title">
+              <h3>Flujo de Caja Neto Mensual</h3>
+              <span id="cashflowCaption">Escenario Medio</span>
+            </div>
+            <canvas id="cashFlowChart" aria-label="Línea de tendencia de flujo de caja neto mensual"></canvas>
+          </article>
+          <article class="chart-card glowing-border">
+            <div class="chart-title">
+              <h3>Mix de Ingresos M12</h3>
+              <span>Suscripciones • Ads • Escrow</span>
+            </div>
+            <canvas id="revenueMixChart" aria-label="Gráfico de torta de la composición de ingresos al mes 12"></canvas>
+          </article>
+        </div>
+
+        <!-- TABLA DE DETALLE MENSUAL -->
+        <div class="table-wrap">
+          <table id="cashflowTable">
+            <caption>Proyecciones de ingresos y egresos mes a mes (Moneda: Soles S/.)</caption>
+            <thead>
+              <tr>
+                <th>Mes</th>
+                <th>Alumnos Activos</th>
+                <th>Suscripciones Premium</th>
+                <th>Publicidad B2C</th>
+                <th>Micro-comisiones</th>
+                <th>Costos Operativos</th>
+                <th>Flujo Neto</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <!-- DESGLOSE DE COSTOS OPERATIVOS POR ESCENARIO/MES (WOW FACTOR FINANCIERO) -->
+        <div id="costBreakdownCard" class="glass-card glowing-border" style="margin-top: 24px; border-left: 5px solid var(--purple-500);">
+          <!-- Se cargará de forma dinámica mediante JavaScript para reflejar cada escenario -->
+        </div>
+
+        <div class="assumption-grid">
+          <article>
+            <b>Suscripción Premium (S/ 7/mes)</b>
+            <span>Dirigido a vendedores frecuentes para mantener hasta 5 productos fijos sin auto-destrucción y destacar en el feed.</span>
+          </article>
+          <article>
+            <b>Publicidad Local B2C</b>
+            <span>Banners no invasivos pagados por fotocopiadoras, librerías, restaurantes y academias cercanas, segmentados por facultad.</span>
+          </article>
+          <article>
+            <b>Garantía de Escrow (S/ 0.50)</b>
+            <span>Microcomisión opcional que retiene el pago digital de forma segura hasta que el comprador confirme la entrega física en campus.</span>
+          </article>
+          <article>
+            <b>Costo de Servidores Piloto S/ 0</b>
+            <span>Uso de las capas gratuitas (Free Tiers) de Supabase PostgreSQL, GitHub Actions y servidores Render para evitar quemar caja antes del PMF.</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 7: MARKETING, UX/UI Y PALETAS -->
+      <section id="marketing" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-palette"></i> Diseño, UX/UI & Psicología del Color</span>
+          <h2>Análisis y Comparativa de Paletas Visuales para Stakeholders.</h2>
+          <p>
+            La elección de color de una app no es un capricho artístico. Comunica confianza, define el target de compradores e impacta de manera directa en la tasa de adopción del campus.
+          </p>
+        </div>
+
+        <div class="palette-analysis">
+          <div class="analysis-card glowing-border">
+            <h3><i class="fas fa-shield-alt"></i> Criterios de Aprobación UX/UI</h3>
+            <p>
+              Buscamos que la app se perciba **tecnológica, unisex y extremadamente limpia**. Siguiendo la filosofía de **Shadcn UI**, priorizamos la tipografía (Inter/Outfit), el contraste y que el producto del alumno destaque por encima del adorno visual de la app.
+            </p>
+            <p style="margin-top: 10px;">
+              El modo claro ofrece máxima legibilidad bajo la luz solar en los pasillos de la UNMSM, mientras que el modo oscuro (basado en grises ricos) reduce el cansancio visual en bibliotecas y aulas.
+            </p>
+          </div>
+          <div class="analysis-card glowing-border">
+            <h3><i class="fas fa-vial"></i> Evitar la Exclusión Cromática</h3>
+            <p>
+              <strong>Advertencia de Diseño:</strong> Si bien la paleta original con fucsia y lila suave es excelente para engagement, el sesgo excesivo hacia tonos fucsia pastel puede desanimar la descarga inicial de usuarios que compran tecnología o tutorías de ingeniería.
+            </p>
+            <p style="margin-top: 10px;">
+              Presentamos propuestas alternativas para demostrar madurez visual e inclusión cromática de género en el campus.
+            </p>
+          </div>
+        </div>
+
+        <!-- SELECTOR INTERACTIVO DE PALETAS DE COLOR -->
+        <h3 style="margin: 28px 0 16px;"><i class="fas fa-swatchbook"></i> Selector de Paletas Dinámico (¡Haz clic en cualquiera para cambiar el diseño de la web!)</h3>
+        <div class="palette-switcher" id="paletteSwitcher"></div>
+
+        <!-- TABLA COMPARATIVA PROFUNDA DE PALETAS (ACADEMICA Y COMERCIAL) -->
+        <h3 style="margin: 34px 0 16px;"><i class="fas fa-balance-scale"></i> Sustento Técnico de Paletas: Ventajas y Desventajas</h3>
+        <div class="table-wrap">
+          <table>
+            <caption>Análisis estratégico de psicología del color y adopción comercial</caption>
+            <thead>
+              <tr>
+                <th>Paleta Visual</th>
+                <th>Psicología & Target</th>
+                <th>Ventajas (PROs)</th>
+                <th>Desventajas (CONs)</th>
+                <th>Recomendación de Experto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-left: 4px solid #7c3aed;">
+                <td><strong>1. Institucional actual</strong><br><small>Original unimarket-mvp</small></td>
+                <td>Creativa, juvenil, cercana y empática. Evoca dinamismo y comercio fresco de postres y moda.</td>
+                <td>• Alto engagement con Gen Z.<br>• Conexión emocional inmediata.<br>• Imagen de marca muy amigable.</td>
+                <td>• Puede percibirse "menos seria" para transacciones de alto valor.<br>• Ligero sesgo femenino inicial.</td>
+                <td><span class="badge" style="background: var(--purple-700); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px;">Default MVP</span> Úsala en el piloto inicial para captar la atención rápida de vendedores de comida.</td>
+              </tr>
+              <tr style="border-left: 4px solid #22d3ee;">
+                <td><strong>2. Nahimic CyberTech</strong><br><small>Cyberpunk / Alto Rendimiento</small></td>
+                <td>Tecnológica, precisa, veloz y unisex. Comunica eficiencia de código, velocidad y notificaciones.</td>
+                <td>• Altamente atractiva para estudiantes de ingeniería y ciencias.<br>• Aspecto moderno de alto rendimiento.<br>• 100% unisex.</td>
+                <td>• Puede sentirse fría o "distante" para productos artesanales o postres.<br>• Exige calibrar bien el modo claro.</td>
+                <td><span class="badge" style="background: #0284c7; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px;">Recomendada Tech</span> Ideal para posicionar a UniMarket como una startup transaccional veloz.</td>
+              </tr>
+              <tr style="border-left: 4px solid #8b5cf6;">
+                <td><strong>3. Premium Indigo</strong><br><small>Estilo Captura de tu Trabajo</small></td>
+                <td>Estabilidad, confianza, orden fintech y solidez comercial corporativa.</td>
+                <td>• Gran seriedad para el escrow/pagos.<br>• Combina calidez e institucionalidad.<br>• Altamente valorada por stakeholders de negocio.</td>
+                <td>• Requiere copys de comunidad divertidos para que no se sienta rígida o aburrida.</td>
+                <td><span class="badge" style="background: #6366f1; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px;">Ideal Escala</span> La mejor opción para el pitch de inversión y escalamiento multi-campus.</td>
+              </tr>
+              <tr style="border-left: 4px solid #71717a;">
+                <td><strong>4. Shadcn Zinc</strong><br><small>Minimalismo Atemporal</small></td>
+                <td>Objetividad, limpieza, profesionalismo puro y enfoque directo en el producto.</td>
+                <td>• Pone el 100% del foco visual en las fotos de stock.<br>• Máxima accesibilidad WCAG.<br>• Elegancia y sobriedad startup.</td>
+                <td>• Puede sentirse "vacía" o excesivamente sobria para el marketing de guerrilla físico en campus.</td>
+                <td><span class="badge" style="background: #09090b; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px;">Diseñadores</span> Recomendada si se integra con feeds fotográficos de alta definición de productos.</td>
+              </tr>
+              <tr style="border-left: 4px solid #d4af37;">
+                <td><strong>5. UNMSM Modern Tech</strong><br><small>Identidad Oficial Refinada</small></td>
+                <td>Pertenencia institucional, orgullo sanmarquino, seriedad académica y confianza.</td>
+                <td>• Aprobación directa inmediata por decanos y rectorado.<br>• Elimina desconfianza externa.<br>• Imagen corporativa oficial.</td>
+                <td>• Puede sentirse asociada a burocracia universitaria si no se le da un acento tech cian.</td>
+                <td><span class="badge" style="background: #003366; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px;">Institucional</span> La llave maestra para alianzas, convenios de campus y licencias de bienestar.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ux-grid" style="margin-top: 24px;">
+          <article class="ux-card">
+            <div class="ux-visual marketplace"></div>
+            <h3>Comprador Universitario</h3>
+            <p>Busca rapidez extrema. Exige filtros limpios, precios visibles sin mandar "inbox", reputación del vendedor y un mapa para encontrar el producto en sus 10 min de receso.</p>
+          </article>
+          <article class="ux-card">
+            <div class="ux-visual sellerflow"></div>
+            <h3>Vendedor Emprendedor</h3>
+            <p>Sufre de tiempo limitado. Necesita publicar en menos de un minuto, evitar estar respondiendo preguntas repetidas de WhatsApp y asegurar visibilidad real de su stock.</p>
+          </article>
+          <article class="ux-card">
+            <div class="ux-visual trust"></div>
+            <h3>Jefa & Stakeholders</h3>
+            <p>Buscan seguridad y viabilidad. Exigen ver gobernanza de datos estudiantiles (evitar infiltrados), costo de operación bajo, adopción medible y roadmap realista.</p>
+          </article>
+        </div>
+
+        <div class="segmentation-board">
+          <h3>Estrategia de Captación por Segmentos (Marketing de Guerrilla)</h3>
+          <div class="segment-row">
+            <span>1. Vendedores de Comida Fresca</span>
+            <b>Alta Frecuencia (Core)</b>
+            <small>Brownies, postres, desayunos. Generan visitas diarias a la app y validan la Pizarra de 24h.</small>
+          </div>
+          <div class="segment-row">
+            <span>2. Accesorios, Moda & Regalos</span>
+            <b>Alto Margen</b>
+            <small>Joyas, polos personalizados, regalos rápidos. Fomentan la conversión en fechas especiales (San Valentín, parciales).</small>
+          </div>
+          <div class="segment-row">
+            <span>3. Tutorías & Servicios Campus</span>
+            <b>Cero Inventario</b>
+            <small>Tutorías académicas de matemáticas, traducciones o impresiones rápidas. Abren la puerta al Campus OS.</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 8: VALOR DE ALTO IMPACTO (BRAINSTORMING) -->
+      <section id="brainstorming" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-lightbulb"></i> Ecosistema de Alto Impacto</span>
+          <h2>De Marketplace Local a Campus OS: El camino a ser un potencial unicornio.</h2>
+          <p>
+            La gran visión de UniMarket no es solo comercializar productos; es sentar la infraestructura operativa, de seguridad y economía del estudiante dentro de los campus universitarios de LatAm.
+          </p>
+        </div>
+
+        <!-- GRID DE 6 IDEAS DE ALTO IMPACTO -->
+        <div class="idea-grid" id="ideaGrid"></div>
+
+        <!-- MODELO SAAS B2B2C -->
+        <div class="unicorn-panel">
+          <div>
+            <span class="eyebrow"><i class="fas fa-rocket"></i> Modelo B2B2C Estratégico</span>
+            <h3>Licenciamiento a Universidades (SaaS Campus OS)</h3>
+            <p>
+              Después de consolidar UniMarket en la UNMSM, el negocio no escala vendiendo más brownies. Escala vendiendo a las **administraciones de las universidades privadas y corporativas del país y de LatAm** un software de economía circular y seguridad de campus.
+            </p>
+            <p style="margin-top: 8px; font-size: 13.5px; color: var(--muted)">
+              Las universidades pagan una suscripción anual por proveer a sus estudiantes de un entorno transaccional seguro y controlado, eliminando el comercio informal incontrolado en redes sociales.
+            </p>
+          </div>
+          <div class="unicorn-steps" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px;">
+            <span>Fase 1: Piloto UNMSM (Validar Liquidez)</span>
+            <span>Fase 2: Expansión Multi-Campus (3 Universidades Lima)</span>
+            <span>Fase 3: Licenciamiento SaaS Campus OS a Universidades</span>
+            <span>Fase 4: Consolidación LatAm (México, Colombia, Chile)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 9: GOBERNANZA Y RIESGOS -->
+      <section id="validacion" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-shield-halved"></i> Gobernanza y Validación</span>
+          <h2>Gobernanza del Aprendizaje: Mitigar riesgos antes de gastar presupuesto.</h2>
+          <p>
+            Medimos el éxito mediante KPIs reales de retención de usuarios y liquidez de mercado, no por la cantidad de líneas de código escritas.
+          </p>
+        </div>
+
+        <div class="kpi-dashboard">
+          <article>
+            <b>Tasa de Activación (≥60%)</b>
+            <span>Porcentaje de estudiantes registrados con @unmsm que publican o chatean en la primera semana.</span>
+          </article>
+          <article>
+            <b>Liquidez de Oferta (≥30)</b>
+            <span>Publicaciones activas concurrentes cada día del piloto controlado para mantener el feed fresco.</span>
+          </article>
+          <article>
+            <b>Tasa de Conversión (≥20%)</b>
+            <span>Conversaciones de chat interno seguro que terminan en acuerdo de punto de encuentro físico.</span>
+          </article>
+          <article>
+            <b>Retención de Usuarios (NPS ≥35)</b>
+            <span>Puntuación de recomendación de los vendedores tras finalizar el piloto de 4 semanas.</span>
+          </article>
+        </div>
+
+        <!-- TABLA DE RIESGOS -->
+        <h3 style="margin: 28px 0 16px;"><i class="fas fa-triangle-exclamation"></i> Matriz de Riesgos Críticos y Mitigaciones</h3>
+        <div class="risk-table-wrap">
+          <table class="risk-table">
+            <thead>
+              <tr>
+                <th>Riesgo Identificado</th>
+                <th>Nivel Impacto</th>
+                <th>Estrategia de Mitigación (Negocio / Técnica)</th>
+                <th>Responsable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Baja adopción en el piloto</strong></td>
+                <td>Alto</td>
+                <td>Marketing de guerrilla con embajadores de facultad por QR físico y beneficios premium gratis.</td>
+                <td>Negocio (Jefa)</td>
+              </tr>
+              <tr>
+                <td><strong>Desconfianza o fraudes en entregas</strong></td>
+                <td>Muy Alto</td>
+                <td>OTP obligatorio, reputación visible de vendedores y mapa de "puntos seguros" vigilados en campus.</td>
+                <td>Técnico (Tú)</td>
+              </tr>
+              <tr>
+                <td><strong>Sobrecarga técnica en desarrollo</strong></td>
+                <td>Medio</td>
+                <td>MoSCoW estricto: no pasarela de pago compleja ni IA avanzada antes de validar tracción.</td>
+                <td>Técnico (Tú)</td>
+              </tr>
+              <tr>
+                <td><strong>Infiltración de usuarios externos</strong></td>
+                <td>Alto</td>
+                <td>Filtro estricto de JWT y verificación mediante OTP de correo oficial <code>@unmsm.edu.pe</code>.</td>
+                <td>Técnico (Tú)</td>
+              </tr>
+              <tr>
+                <td><strong>Percepción visual excluyente</strong></td>
+                <td>Medio</td>
+                <td>Uso de paletas neutras (Indigo/CyberTech) con soporte nativo de modo oscuro.</td>
+                <td>Diseño UX/UI</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="experiment-grid">
+          <article>
+            <h3>Experimento 1: El Vendedor</h3>
+            <p>Validar si publicar en la Pizarra de 24h reduce a la mitad el tiempo coordinando entregas frente a WhatsApp.</p>
+          </article>
+          <article>
+            <h3>Experimento 2: El Comprador</h3>
+            <p>Validar si un estudiante comprador encuentra un producto favorito en pabellón en menos de 90 segundos.</p>
+          </article>
+          <article>
+            <h3>Experimento 3: Confianza</h3>
+            <p>Medir el incremento de intención de compra al mostrar la validación del correo oficial vs. perfiles sin validar.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 10: GUION Y PITCH (PLAN DE ACCIÓN) -->
+      <section id="pitch" class="section">
+        <div class="section-heading">
+          <span class="eyebrow"><i class="fas fa-bullhorn"></i> Pitch Estratégico</span>
+          <h2>Narrativa Ejecutiva: Defender UniMarket ante la jefa y stakeholders.</h2>
+          <p>
+            Vende visión, control de costos, seguridad de datos y aprendizaje medible. No hables solo de software; habla de liquidez.
+          </p>
+        </div>
+
+        <div class="pitch-layout">
+          <article class="pitch-card glowing-border">
+            <p>“UniMarket no nace para competir contra WhatsApp, sino para estructurar la economía universitaria de forma confiable, privada y limpia.”</p>
+          </article>
+          <article class="pitch-card glowing-border">
+            <p>“El prototipo web actual cumplió su función. Para producción, migrar a Flutter + FastAPI + Supabase nos da notificaciones push e inmediatez sin costes iniciales de caja.”</p>
+          </article>
+          <article class="pitch-card glowing-border">
+            <p>“Excluir pasarelas de pago y delivery externo en la Fase 1 no es limitar el producto; es proteger el presupuesto y enfocarnos en lo que valida el negocio: liquidez y confianza.”</p>
+          </article>
+          <article class="pitch-card glowing-border">
+            <p>“Con una proyección media de S/ 15,220 de flujo de caja neto al año 1, demostramos que el proyecto es rentable, sostenible y con potencial de licenciamiento B2B2C.”</p>
+          </article>
+        </div>
+
+        <!-- PLAN INMEDIATO DE 10 DIAS -->
+        <div class="action-plan glowing-border" style="margin-top: 28px;">
+          <h3><i class="fas fa-calendar-check"></i> Plan de Acción Inmediato (Primeros 10 Días)</h3>
+          <ol>
+            <li><strong>Día 1-2:</strong> Cerrar la priorización de backlog y criterios de aceptación del Sprint 0 con la jefa (Product Owner).</li>
+            <li><strong>Día 3-4:</strong> Configurar el repositorio Git, pipelines de CI/CD automáticos y el entorno en Supabase.</li>
+            <li><strong>Día 5-6:</strong> Crear los wireframes interactivos Figma para el onboarding de correo <code>@unmsm</code> y el feed.</li>
+            <li><strong>Día 7-8:</strong> Reclutar formalmente a los primeros 10 vendedores frecuentes de repostería y moda para la prueba cerrada.</li>
+            <li><strong>Día 9-10:</strong> Validar el contraste de las paletas (Indigo/CyberTech/Original) mediante Test A/B rápido con alumnos de campo.</li>
+          </ol>
+        </div>
+
+        <!-- VISIÓN FINAL INSPIRADORA -->
+        <div class="unicorn-panel" style="margin-top: 24px; background: linear-gradient(135deg, var(--lilac-100), var(--pink-soft)); border-left: 6px solid var(--purple-700);">
+          <div>
+            <span class="eyebrow"><i class="fas fa-trophy"></i> Visión Final del Producto</span>
+            <h3>El Futuro del Comercio en el Campus</h3>
+            <p>
+              UniMarket no es solo un software de compra y venta. Es el **Sistema Operativo del Estudiante Sanmarquino**: el centro neurálgico donde los estudiantes aceleran su crecimiento profesional, monetizan sus habilidades de forma segura y dinamizan la economía circular del campus.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

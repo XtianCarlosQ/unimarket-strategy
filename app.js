@@ -13,7 +13,8 @@ const moscowData = {
       {name:'Pizarra Efímera de 24 Horas', detail:'Base de datos con TTL (Time-To-Live) automático de 24 horas para cada publicación de producto.', example:'Mantiene el feed limpio y libre de spam. Genera hábito de apertura diaria por urgencia (FOMO).', effort:'M', impact:'Alto', risk:'Bajo'},
       {name:'Chat Interno en Tiempo Real', detail:'Mensajería P2P basada en WebSockets para coordinar compras sin exponer números personales.', example:'Protege la privacidad de los alumnos y retiene el uso dentro de la plataforma para analítica futura.', effort:'L', impact:'Alto', risk:'Medio'},
       {name:'Publicación y Exploración de Productos', detail:'Formulario rápido para subir fotos, título, precio, categoría y pabellón.', example:'Vendedor publica "queque S/ 4 en Letras a la 1 pm", visible instantáneamente para el campus.', effort:'M', impact:'Alto', risk:'Bajo'},
-      {name:'Categorías y Búsqueda Simple', detail:'Filtros rápidos por precio, disponibilidad y categoría de producto.', example:'Clasificación directa en Postres, Servicios, Moda, Tutorías y Libros.', effort:'S', impact:'Alto', risk:'Bajo'}
+      {name:'Categorías y Búsqueda Simple', detail:'Filtros rápidos por precio, disponibilidad y categoría de producto.', example:'Clasificación directa en Postres, Servicios, Moda, Tutorías y Libros.', effort:'S', impact:'Alto', risk:'Bajo'},
+      {name:'Configuración de Pagos en Perfil y Pacto de Compra', detail:'Registro de Yape/Plin o Efectivo en el perfil del vendedor, forzando la aceptación explícita de estas condiciones en el chat (Pacto de Compra) para cerrar la reserva.', example:'El comprador acepta explícitamente pagar S/ 10 por Yape al vendedor al cerrar el Pacto de Compra en el chat. Si es en efectivo debe quedar registrado con cuánto va a pagar para asegurar el vuelto.', effort:'M', impact:'Crítico', risk:'Bajo'}
     ]
   },
   should: {
@@ -25,7 +26,8 @@ const moscowData = {
       {name:'Buscador Cognitivo con IA', detail:'Procesamiento semántico FastAPI para entender intenciones complejas en lenguaje informal estudiantil.', example:'Búsqueda: "un regalo barato para mi novia para hoy a las 6 pm" → Muestra rosas y detalles.', effort:'L', impact:'Alto', risk:'Medio'},
       {name:'Filtro por Pabellón o Facultad', detail:'Clasificación geográfica que prioriza los productos según el pabellón de entrega.', example:'Permite transacciones ultra rápidas en el receso de 10 minutos entre clases.', effort:'M', impact:'Medio-Alto', risk:'Bajo'},
       {name:'Horarios Disponibles del Vendedor', detail:'Carga de ventanas horarias del vendedor para evitar la coordinación eterna de chats.', example:'"Entrego en Biblioteca Central de 2 a 3 pm" simplifica la reserva del comprador.', effort:'M', impact:'Alto', risk:'Bajo'},
-      {name:'Popularidad y Reputación Básica', detail:'Señales de confianza basadas en la cantidad de entregas concretadas y feedback positivo.', example:'"15 entregas exitosas, valoración 4.9/5" otorga seguridad inmediata al comprador.', effort:'M', impact:'Alto', risk:'Medio'}
+      {name:'Popularidad y Reputación Básica', detail:'Señales de confianza basadas en la cantidad de entregas concretadas y feedback positivo.', example:'"15 entregas exitosas, valoración 4.9/5" otorga seguridad inmediata al comprador.', effort:'M', impact:'Alto', risk:'Medio'},
+      {name:'Dashboard Premium para Vendedores', detail:'Estadísticas de visualizaciones, clics en chat y retención de stock para perfiles de pago.', example:'Saber qué días de la semana y qué horas generan el mayor volumen de intención de compra.', effort:'M', impact:'Medio', risk:'Bajo'}
     ]
   },
   could: {
@@ -36,8 +38,7 @@ const moscowData = {
     items: [
       {name:'Penalización Digital por Plantón', detail:'Algoritmo de moderación que suspende temporalmente perfiles con múltiples inasistencias a entregas.', example:'Fomenta la responsabilidad y seriedad del comercio estudiantil.', effort:'H', impact:'Medio', risk:'Alto'},
       {name:'Mapa de Puntos de Encuentro Seguros', detail:'Geolocalización efímera por 15 minutos en zonas de campus con resguardo o videovigilancia.', example:'Los estudiantes se ubican en tiempo real en Plaza del Rectorado o Biblioteca Central.', effort:'L', impact:'Medio', risk:'Medio'},
-      {name:'Historias de Campus (Clips de 15s)', detail:'Formato de video vertical efímero de 24h para mostrar el detrás de escena o stock del día.', example:'Una estudiante de modas muestra el proceso de costura de sus poleras en un clip rápido.', effort:'L', impact:'Medio', risk:'Medio'},
-      {name:'Dashboard Premium para Vendedores', detail:'Estadísticas de visualizaciones, clics en chat y retención de stock para perfiles de pago.', example:'Saber qué días de la semana y qué horas generan el mayor volumen de intención de compra.', effort:'M', impact:'Medio', risk:'Bajo'}
+      {name:'Historias de Campus (Clips de 15s)', detail:'Formato de video vertical efímero de 24h para mostrar el detrás de escena o stock del día.', example:'Una estudiante de modas muestra el proceso de costura de sus poleras en un clip rápido.', effort:'L', impact:'Medio', risk:'Medio'}
     ]
   },
   wont: {
@@ -46,7 +47,7 @@ const moscowData = {
     why: 'Estas funciones desvían el foco legal, financiero y técnico en el primer año. Excluirlas protege el presupuesto y la credibilidad operativa.',
     stakeholder: 'Para stakeholders: decir "no todavía" nos blinda de burocracias regulatorias de pasarelas de pago externas o de costos logísticos de delivery innecesarios.',
     items: [
-      {name:'Pasarela de Pagos Completa', detail:'Integración de pagos con tarjetas de crédito/débito dentro de la app (split payments/escrow internacional).', example:'Mitigación: Mantener coordinación directa con Yape/Plin o efectivo al momento del encuentro.', effort:'XL', impact:'Medio', risk:'Muy Alto'},
+      {name:'Pasarela de Pagos Completa', detail:'Integración de pagos con tarjetas de crédito/débito dentro de la app (split payments/escrow internacional).', example:'Mitigación: Registro de Yape/Plin/Efectivo en perfil de vendedor y aceptación explícita de condiciones en Pacto de Compra.', effort:'XL', impact:'Medio', risk:'Muy Alto'},
       {name:'Logística y Delivery Externo', detail:'Flota de entregas motorizadas o alianzas externas de logística dentro del campus.', example:'Mitigación: El intercambio sigue siendo directo de estudiante a estudiante dentro del campus.', effort:'XL', impact:'Bajo', risk:'Alto'},
       {name:'Expansión Multicampus Inmediata', detail:'Apertura de la app en múltiples universidades (PUCP, ULima, UP) desde el día uno.', example:'Mitigación: Validar primero la densidad, PMF y reputación en el piloto cerrado de la UNMSM.', effort:'H', impact:'Alto', risk:'Alto'},
       {name:'Red Social Romántica integrada', detail:'Features de citas o encuentros casuales entre estudiantes.', example:'Mitigación: Foco 100% profesional y comercial universitario bajo marca institucional.', effort:'M', impact:'Bajo', risk:'Alto'}
@@ -62,8 +63,8 @@ const sprintData = [
   },
   {
     id: 'Sprint 1', title: 'Auth & Escudo', weeks: 'Semanas 2-3', goal: 'Garantizar el entorno seguro y validación institucional.',
-    deliverables: ['Autenticación Supabase Auth', 'Filtro Regex para correo @unmsm.edu.pe', 'Validación OTP por email', 'Onboarding de perfiles de usuario'],
-    demo: 'Registro de un nuevo estudiante sanmarquino, verificación de OTP y creación exitosa de su perfil.'
+    deliverables: ['Autenticación Supabase Auth', 'Filtro Regex para correo @unmsm.edu.pe', 'Validación OTP por email', 'Onboarding de perfiles de usuario con métodos de pago manuales (Yape/Plin/Efectivo)'],
+    demo: 'Registro de un nuevo estudiante sanmarquino, verificación de OTP, configuración de medios de pago en perfil y creación de cuenta.'
   },
   {
     id: 'Sprint 2', title: 'Pizarra Efímera', weeks: 'Semanas 4-5', goal: 'Permitir publicaciones reales y expiración automática.',
@@ -72,18 +73,18 @@ const sprintData = [
   },
   {
     id: 'Sprint 3', title: 'Chat Seguro P2P', weeks: 'Semanas 6-7', goal: 'Habilitar coordinación en tiempo real sin salir de la app.',
-    deliverables: ['Mensajería WebSocket en tiempo real', 'Notificaciones push en background', 'Plantillas de coordinación', 'Políticas de privacidad en chat'],
-    demo: 'Comprador inicia conversación con vendedor coordinando punto de entrega sin intercambiar números telefónicos.'
+    deliverables: ['Mensajería WebSocket en tiempo real', 'Notificaciones push en background', 'Plantillas de coordinación y Pacto de Compra básico', 'Políticas de privacidad en chat'],
+    demo: 'Comprador inicia conversación con vendedor coordinando punto de entrega y visualizando la opción del Pacto de Compra.'
   },
   {
     id: 'Sprint 4', title: 'Logística de Campus', weeks: 'Semanas 8-9', goal: 'Atacar el dolor operativo de coordinar encuentros.',
-    deliverables: ['Carga de ventanas horarias de vendedores', 'Geotagging básico de pabellones', 'Puntos seguros de encuentro sugeridos', 'Reserva de producto'],
-    demo: 'Comprador reserva un postre, selecciona Biblioteca Central e indica que recogerá en el cambio de clase a las 2 pm.'
+    deliverables: ['Carga de ventanas horarias de vendedores', 'Geotagging básico de pabellones', 'Puntos seguros de encuentro sugeridos', 'Reserva de producto con aceptación explícita de condiciones de pago en el Pacto de Compra'],
+    demo: 'Comprador reserva un postre en el cambio de clase aceptando explícitamente las condiciones de pago (Yape/Plin/Efectivo) para cerrar la reserva.'
   },
   {
     id: 'Sprint 5', title: 'Adopción & Feedback', weeks: 'Semanas 10-11', goal: 'Preparar el lanzamiento del piloto y validar percepción.',
-    deliverables: ['Métricas analíticas integradas', 'Landing page de captación de sellers', 'Sistema de valoración básica', 'Test A/B de paletas'],
-    demo: 'Revisión del panel de analítica captando eventos de uso y visualización del feedback de los primeros 10 usuarios beta.'
+    deliverables: ['Métricas analíticas integradas', 'Landing page de captación de sellers', 'Sistema de valoración básica', 'Dashboard Premium para Vendedores (Métricas básicas y visualizaciones)', 'Test A/B de paletas'],
+    demo: 'Visualización del Dashboard Premium con vistas de productos e intenciones de chat, y panel de analítica de usuario.'
   },
   {
     id: 'Sprint 6', title: 'Piloto & Cierre', weeks: 'Semana 12', goal: 'Ejecutar piloto completo y tomar la decisión Go/No-Go.',

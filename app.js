@@ -174,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('menuToggle');
   const nextSectionBtn = document.getElementById('nextSection');
   const scenarioSelect = document.getElementById('scenarioSelect');
+  const subPriceSelect = document.getElementById('subPriceSelect');
   const themeModeBtn = document.getElementById('themeModeBtn');
 
   // Inicialización de la navegación
@@ -410,21 +411,132 @@ document.addEventListener('DOMContentLoaded', () => {
   // MODELO FINANCIERO E INTERACCIÓN DE ESCENARIOS
   // ==========================================================================
 
-  function computeFinancialRows(key) {
+  function calculateVAN(netFlows, discountRate = 0.01, initialInvestment = 500) {
+    let van = -initialInvestment;
+    netFlows.forEach((flow, index) => {
+      van += flow / Math.pow(1 + discountRate, index + 1);
+    });
+    return van;
+  }
+
+  function calculateTIR(netFlows, initialInvestment = 500) {
+    let low = -0.99;
+    let high = 5.0;
+    let maxIter = 100;
+    let precision = 1e-6;
+
+    function npv(rate) {
+      let val = -initialInvestment;
+      for (let t = 0; t < netFlows.length; t++) {
+        val += netFlows[t] / Math.pow(1 + rate, t + 1);
+      }
+      return val;
+    }
+
+    let yLow = npv(low);
+    let yHigh = npv(high);
+
+    if (yLow * yHigh > 0) {
+      return null;
+    }
+
+    for (let i = 0; i < maxIter; i++) {
+      let mid = (low + high) / 2;
+      let yMid = npv(mid);
+      if (Math.abs(yMid) < precision) {
+        return mid;
+      }
+      if (yLow * yMid < 0) {
+        high = mid;
+        yHigh = yMid;
+      } else {
+        low = mid;
+        yLow = yMid;
+      }
+    }
+    return (low + high) / 2;
+  }
+
+  function computeFinancialRows(key, priceOverride, commissionOverride, costFactorOverride, buyerConvOverride, sellerConvOverride) {
     const s = financialScenarios[key];
+    
+    let price = 7;
+    if (priceOverride !== undefined) {
+      price = priceOverride;
+    } else {
+      const el = document.getElementById('subPriceSelect');
+      price = el ? Number(el.value) : 7;
+    }
+    
+    let comm = 0.5;
+    if (commissionOverride !== undefined) {
+      comm = commissionOverride;
+    } else {
+      const el = document.getElementById('commissionSelect');
+      comm = el ? Number(el.value) : 0.5;
+    }
+    
+    let costFactor = 1.0;
+    if (costFactorOverride !== undefined) {
+      costFactor = costFactorOverride;
+    } else {
+      const el = document.getElementById('costFactorSelect');
+      costFactor = el ? Number(el.value) : 1.0;
+    }
+
+    let buyerConv = 0.6;
+    if (buyerConvOverride !== undefined) {
+      buyerConv = buyerConvOverride;
+    } else {
+      const el = document.getElementById('buyerConvSelect');
+      buyerConv = el ? Number(el.value) : 0.6;
+    }
+
+    let sellerConv = 0.03;
+    if (sellerConvOverride !== undefined) {
+      sellerConv = sellerConvOverride;
+    } else {
+      const el = document.getElementById('sellerConvSelect');
+      sellerConv = el ? Number(el.value) : 0.03;
+    }
+    
+    const buyerConvFactor = buyerConv / 0.6;
+    const sellerConvFactor = sellerConv / 0.03;
+    
     return s.users.map((users, i) => {
-      const subs = Math.round(users * s.conversion[i] * 7); // S/ 7 de suscripción
-      const ads = s.ads[i];
-      const commissions = s.commissions[i];
-      const costs = s.costs[i];
+      const compradores = Math.ceil(users * buyerConv);
+      const rate = s.conversion[i] * sellerConvFactor;
+      const subs = Math.ceil(users * rate) * price;
+      const ads = Math.round(s.ads[i] * buyerConvFactor);
+      const commissions = Math.round(((s.commissions[i] / 0.5) * comm) * buyerConvFactor);
+      const costs = Math.round(s.costs[i] * costFactor);
       const net = subs + ads + commissions - costs;
-      return {month: i + 1, users, subs, ads, commissions, costs, net};
+      return {month: i + 1, users, buyerConv, sellerConv: rate, compradores, subs, ads, commissions, costs, net};
     });
   }
 
   function formatMoney(value) {
     return new Intl.NumberFormat('es-PE', {style: 'currency', currency: 'PEN', maximumFractionDigits: 0}).format(value);
   }
+
+  function formatDelta(value, isPercent = false) {
+    if (Math.abs(value) < 1e-4) return `<span style="color: var(--muted); font-weight: 700;">±0${isPercent ? '%' : ''}</span>`;
+    const sign = value > 0 ? '+' : '';
+    const color = value > 0 ? 'var(--green)' : 'var(--danger)';
+    const formatted = isPercent ? (value * 100).toFixed(1) + '%' : formatMoney(value);
+    return `<span style="color: ${color}; font-weight: 800;">${sign}${formatted}</span>`;
+  }
+
+  function formatBEDelta(sim, base) {
+    if (sim === base) return `<span style="color: var(--muted); font-weight: 700;">±0 meses (Sin cambio)</span>`;
+    if (sim === 13) return `<span style="color: var(--danger); font-weight: 800;">No se alcanza en Año 1</span>`;
+    if (base === 13) return `<span style="color: var(--green); font-weight: 800;">¡Ahora sí en Mes ${sim}!</span>`;
+    const diff = sim - base;
+    const color = diff < 0 ? 'var(--green)' : 'var(--danger)';
+    const sign = diff > 0 ? '+' : '';
+    return `<span style="color: ${color}; font-weight: 800;">${sign}${diff} ${Math.abs(diff) === 1 ? 'mes' : 'meses'}</span>`;
+  }
+
 
   const costDetailsData = {
     pesimista: {
@@ -535,7 +647,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderFinancials(key = 'base') {
+    // Escenario de simulación dinámico
     const rows = computeFinancialRows(key);
+    
+    // Escenario de línea base original (Sub = S/ 7, Comm = S/ 0.50, Costs = 100%, Conv = 60%, SellerConv = 3%)
+    const baseRows = computeFinancialRows(key, 7, 0.5, 1.0, 0.6, 0.03);
+    
     const scenario = financialScenarios[key];
     
     document.querySelectorAll('.scenario-btn').forEach(b => b.classList.toggle('active', b.dataset.scenario === key));
@@ -547,11 +664,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalRevenue = rows.reduce((acc, r) => acc + r.subs + r.ads + r.commissions, 0);
     const totalCosts = rows.reduce((acc, r) => acc + r.costs, 0);
     const totalNet = rows.reduce((acc, r) => acc + r.net, 0);
+    
+    const totalSubs = rows.reduce((acc, r) => acc + r.subs, 0);
+    const totalAds = rows.reduce((acc, r) => acc + r.ads, 0);
+    const totalComms = rows.reduce((acc, r) => acc + r.commissions, 0);
+    
     const m12 = rows[rows.length - 1];
     
     // Hallar punto de equilibrio (primer mes con neto > 0)
     const breakEvenRow = rows.find(r => r.net > 0);
     const breakEven = breakEvenRow ? `Mes ${breakEvenRow.month}` : 'Pendiente Año 2';
+ 
+    // Calcular VAN y TIR dinámicamente
+    const netFlows = rows.map(r => r.net);
+    const van = calculateVAN(netFlows, 0.01, 500);
+    const tir = calculateTIR(netFlows, 500);
+ 
+    // Actualizar encabezados dinámicos
+    const buyerConv = rows[0] ? rows[0].buyerConv : 0.6;
+    const sellerTh = document.getElementById('sellerActiveTh');
+    if (sellerTh) {
+      sellerTh.innerHTML = `Vendedores Activos<br>[${(m12.sellerConv * 100).toFixed(1)}%]`;
+    }
+    const buyerTh = document.getElementById('buyerActiveTh');
+    if (buyerTh) {
+      buyerTh.innerHTML = `Compradores Activos<br>[${Math.round(buyerConv * 100)}%]`;
+    }
 
     const kpiWrap = document.getElementById('financeKpis');
     if (kpiWrap) {
@@ -564,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <article>
           <b>Ingresos Brutos Anuales</b>
           <strong>${formatMoney(totalRevenue)}</strong>
-          <span>Suscripciones, B2C y escrow</span>
+          <span>Suscripciones, B2C y comisiones</span>
         </article>
         <article>
           <b>Flujo Neto Anual</b>
@@ -576,34 +714,134 @@ document.addEventListener('DOMContentLoaded', () => {
           <strong>${breakEven}</strong>
           <span>Mes del primer flujo positivo</span>
         </article>
+        <article>
+          <b>Rentabilidad (VAN & TIR)</b>
+          <strong style="font-size: 19px; line-height: 1.35; margin-top: 4px; display: block;">
+            VAN (Anual): <span style="color: ${van >= 0 ? 'var(--green)' : 'var(--danger)'};">${formatMoney(van)}</span><br>
+            TIR: <span style="color: ${tir !== null && tir >= 0.01 ? 'var(--green)' : 'var(--danger)'};">${tir !== null ? (tir * 100).toFixed(1) + '%' : 'N/D'}</span>
+          </strong>
+          <span>COK: 1% mensual</span>
+        </article>
       `;
     }
-
+ 
     const tbody = document.querySelector('#cashflowTable tbody');
     if (tbody) {
       tbody.innerHTML = rows.map(r => `
         <tr>
           <td>Mes ${r.month}</td>
           <td>${r.users.toLocaleString('es-PE')}</td>
+          <td style="font-weight: 700; color: var(--purple-700);">${Math.ceil(r.users * r.sellerConv)} <span style="color: var(--muted); font-size: 11px; font-weight: normal;">[${(r.sellerConv * 100).toFixed(1)}%]</span></td>
+          <td style="font-weight: 700; color: var(--pink);">${r.compradores.toLocaleString('es-PE')}</td>
           <td>${formatMoney(r.subs)}</td>
           <td>${formatMoney(r.ads)}</td>
           <td>${formatMoney(r.commissions)}</td>
           <td>${formatMoney(r.costs)}</td>
           <td><strong style="color: ${r.net >= 0 ? 'var(--green)' : 'var(--danger)'}">${formatMoney(r.net)}</strong></td>
         </tr>
-      `).join('');
+      `).join('') + `
+        <tr style="border-top: 2px solid var(--purple-700); font-weight: bold; background: rgba(var(--purple-500-rgb), 0.06); outline: 1px solid var(--line);">
+          <td style="color: var(--purple-700) !important;">Total Año 1</td>
+          <td style="text-align: center !important;">Máx: ${m12.users.toLocaleString('es-PE')}</td>
+          <td style="color: var(--purple-700) !important; font-weight: bold;">Máx: ${Math.ceil(m12.users * m12.sellerConv)}</td>
+          <td style="color: var(--pink) !important; font-weight: bold;">Máx: ${m12.compradores.toLocaleString('es-PE')}</td>
+          <td>${formatMoney(totalSubs)}</td>
+          <td>${formatMoney(totalAds)}</td>
+          <td>${formatMoney(totalComms)}</td>
+          <td>${formatMoney(totalCosts)}</td>
+          <td><strong style="color: ${totalNet >= 0 ? 'var(--green)' : 'var(--danger)'}">${formatMoney(totalNet)}</strong></td>
+        </tr>
+      `;
     }
-
+ 
+    // RENDERIZAR TABLA DE DELTAS (COMPARATIVA DE IMPACTO)
+    const simDeltaGrid = document.getElementById('simDeltasGrid');
+    if (simDeltaGrid) {
+      const baseNetFlows = baseRows.map(r => r.net);
+      const baseVAN = calculateVAN(baseNetFlows, 0.01, 500);
+      const baseTIR = calculateTIR(baseNetFlows, 500);
+      const baseAnnRev = baseRows.reduce((acc, r) => acc + r.subs + r.ads + r.commissions, 0);
+      const baseM12Rev = baseRows[baseRows.length - 1].subs + baseRows[baseRows.length - 1].ads + baseRows[baseRows.length - 1].commissions;
+      
+      const simAnnRev = totalRevenue;
+      const simM12Rev = m12.subs + m12.ads + m12.commissions;
+      
+      const baseBE = baseRows.find(r => r.net > 0)?.month || 13;
+      const simBE = rows.find(r => r.net > 0)?.month || 13;
+      
+      const deltaVAN = van - baseVAN;
+      const deltaTIR = (tir !== null && baseTIR !== null) ? (tir - baseTIR) : null;
+      const deltaAnnRev = simAnnRev - baseAnnRev;
+      const deltaM12Rev = simM12Rev - baseM12Rev;
+      
+      simDeltaGrid.innerHTML = `
+        <div style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 10px 14px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;"><i class="fas fa-chart-pie" style="margin-right: 4px; color: var(--purple-700);"></i> Impacto VAN</div>
+          <div style="font-size: 14.5px; font-weight: 800; margin-top: 4px; color: ${van >= 0 ? 'var(--green)' : 'var(--danger)'};">
+            ${formatMoney(van)} <span style="font-size: 11.5px; display: block; margin-top: 2px; color: var(--muted); font-weight: 500;">Var: ${formatDelta(deltaVAN)}</span>
+          </div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 10px 14px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;"><i class="fas fa-gauge-high" style="margin-right: 4px; color: var(--gold);"></i> Rendimiento TIR</div>
+          <div style="font-size: 14.5px; font-weight: 800; margin-top: 4px; color: ${tir !== null && tir >= 0.01 ? 'var(--green)' : 'var(--danger)'};">
+            ${tir !== null ? (tir * 100).toFixed(1) + '%' : 'N/D'} <span style="font-size: 11.5px; display: block; margin-top: 2px; color: var(--muted); font-weight: 500;">Var: ${deltaTIR !== null ? formatDelta(deltaTIR, true) : 'N/D'}</span>
+          </div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 10px 14px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;"><i class="fas fa-wallet" style="margin-right: 4px; color: var(--green);"></i> Ingresos Anuales</div>
+          <div style="font-size: 14.5px; font-weight: 800; margin-top: 4px; color: var(--green);">
+            ${formatMoney(simAnnRev)} <span style="font-size: 11.5px; display: block; margin-top: 2px; color: var(--muted); font-weight: 500;">Var: ${formatDelta(deltaAnnRev)}</span>
+          </div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 10px 14px; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase;"><i class="fas fa-flag-checkered" style="margin-right: 4px; color: var(--pink);"></i> Punto de Equilibrio</div>
+          <div style="font-size: 14.5px; font-weight: 800; margin-top: 4px; color: var(--ink);">
+            ${simBE <= 12 ? 'Mes ' + simBE : 'Pendiente'} <span style="font-size: 11.5px; display: block; margin-top: 2px; color: var(--muted); font-weight: 500;">Var: ${formatBEDelta(simBE, baseBE)}</span>
+          </div>
+        </div>
+      `;
+    }
+ 
     // Dibujar gráficos Canvas
     drawCashFlow(rows);
-    drawRevenueMix(m12);
-
+    drawRevenueMix(rows);
+ 
     // Desglose dinámico de Costos
     renderCostBreakdown(key);
   }
 
   scenarioSelect?.addEventListener('change', (e) => {
     renderFinancials(e.target.value);
+  });
+
+  subPriceSelect?.addEventListener('change', () => {
+    const activeBtn = document.querySelector('.scenario-btn.active');
+    const scenario = activeBtn ? activeBtn.dataset.scenario : (scenarioSelect ? scenarioSelect.value : 'base');
+    renderFinancials(scenario);
+  });
+
+  document.getElementById('commissionSelect')?.addEventListener('change', () => {
+    const activeBtn = document.querySelector('.scenario-btn.active');
+    const scenario = activeBtn ? activeBtn.dataset.scenario : (scenarioSelect ? scenarioSelect.value : 'base');
+    renderFinancials(scenario);
+  });
+
+  document.getElementById('costFactorSelect')?.addEventListener('change', () => {
+    const activeBtn = document.querySelector('.scenario-btn.active');
+    const scenario = activeBtn ? activeBtn.dataset.scenario : (scenarioSelect ? scenarioSelect.value : 'base');
+    renderFinancials(scenario);
+  });
+
+  document.getElementById('buyerConvSelect')?.addEventListener('change', () => {
+    const activeBtn = document.querySelector('.scenario-btn.active');
+    const scenario = activeBtn ? activeBtn.dataset.scenario : (scenarioSelect ? scenarioSelect.value : 'base');
+    renderFinancials(scenario);
+  });
+
+  document.getElementById('sellerConvSelect')?.addEventListener('change', () => {
+    const activeBtn = document.querySelector('.scenario-btn.active');
+    const scenario = activeBtn ? activeBtn.dataset.scenario : (scenarioSelect ? scenarioSelect.value : 'base');
+    renderFinancials(scenario);
   });
 
   document.querySelectorAll('.scenario-btn').forEach(btn => {
@@ -747,7 +985,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function drawRevenueMix(m12) {
+  function drawRevenueMix(rows) {
     const canvas = document.getElementById('revenueMixChart');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -765,14 +1003,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasW = w / 2;
     const canvasH = h / 2;
     
-    const values = [m12.subs, m12.ads, m12.commissions];
+    const totalSubs = rows.reduce((acc, r) => acc + r.subs, 0);
+    const totalAds = rows.reduce((acc, r) => acc + r.ads, 0);
+    const totalComms = rows.reduce((acc, r) => acc + r.commissions, 0);
+    const values = [totalSubs, totalAds, totalComms];
+    
+    const m12 = rows[rows.length - 1];
+    const m12Vals = [m12.subs, m12.ads, m12.commissions];
+    
     const labels = ['Suscripciones', 'Publicidad B2C', 'Comisiones'];
     const colors = [getCssVar('--chart-a'), getCssVar('--chart-b'), getCssVar('--chart-c')];
     const total = values.reduce((a, b) => a + b, 0) || 1;
 
-    const cx = canvasW / 2;
-    const cy = canvasH / 2 - 15;
-    const radius = 95;
+    const cx = canvasW * 0.25;
+    const cy = canvasH / 2 - 10;
+    const radius = Math.min(canvasW * 0.20, 70);
     let startAngle = -Math.PI / 2;
 
     // Dibujar torta/donut
@@ -790,31 +1035,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Donut hole
     ctx.fillStyle = getCssVar('--card');
     ctx.beginPath();
-    ctx.arc(cx, cy, 50, 0, Math.PI * 2);
+    ctx.arc(cx, cy, 38, 0, Math.PI * 2);
     ctx.fill();
 
     // Texto interior del total
     ctx.fillStyle = getCssVar('--ink');
-    ctx.font = '800 15px Outfit, system-ui';
+    ctx.font = '800 11px Outfit, system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText('Ingresos M12', cx, cy - 4);
+    ctx.fillText('Ingresos Año 1', cx, cy - 5);
     
-    ctx.font = '800 16px Inter, system-ui';
+    ctx.font = '800 13px Inter, system-ui';
     ctx.fillStyle = getCssVar('--purple-800');
-    ctx.fillText(formatMoney(total), cx, cy + 14);
+    ctx.fillText(formatMoney(total), cx, cy + 10);
 
-    // Leyendas informativas
+    // Leyendas informativas a la derecha
     ctx.textAlign = 'left';
-    ctx.font = '600 12.5px Inter, system-ui';
+    const lx = canvasW * 0.48;
     
     values.forEach((v, i) => {
-      const legendY = canvasH - 74 + i * 24;
-      ctx.fillStyle = colors[i];
-      ctx.fillRect(24, legendY - 10, 14, 14);
+      const legendY = cy - 80 + i * 80;
       
-      ctx.fillStyle = getCssVar('--muted');
+      // Barra de color lateral elegante
+      ctx.fillStyle = colors[i];
+      ctx.fillRect(lx, legendY - 12, 6, 48);
+      
+      // 1. Título del concepto (Suscripciones, Publicidad, Comisiones)
+      ctx.fillStyle = getCssVar('--ink');
+      ctx.font = '700 14px Inter, system-ui';
+      ctx.fillText(labels[i], lx + 18, legendY - 12);
+      
+      // 2. Ingresos Anuales (Resaltados, 80% del tamaño anterior = 19px)
+      ctx.fillStyle = colors[i];
+      ctx.font = '800 19px Inter, system-ui';
       const pct = Math.round((v / total) * 100);
-      ctx.fillText(`${labels[i]}: ${formatMoney(v)} (${pct}%)`, 46, legendY);
+      ctx.fillText(`${formatMoney(v)} (${pct}%)`, lx + 18, legendY + 14);
+      
+      // 3. Detalle M12 (Muted)
+      ctx.fillStyle = getCssVar('--muted');
+      ctx.font = '700 13px Inter, system-ui';
+      ctx.fillText(`Mes 12: ${formatMoney(m12Vals[i])}`, lx + 18, legendY + 31);
     });
   }
 

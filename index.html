@@ -698,11 +698,140 @@
           </p>
         </div>
 
-        <!-- CONTROLES FINANCIEROS -->
-        <div class="financial-controls">
-          <button class="scenario-btn" data-scenario="pesimista">Escenario Pesimista</button>
-          <button class="scenario-btn active" data-scenario="base">Escenario Medio</button>
-          <button class="scenario-btn" data-scenario="optimista">Escenario Esperanzador</button>
+        <!-- ALINEACIÓN ESTRATÉGICA DE ACTORES: COMPRADORES VS VENDEDORES -->
+        <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px;">
+          <!-- CARD VENDEDORES -->
+          <div class="glass-card glowing-border" style="border-left: 5px solid var(--purple-700); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-soft);">
+            <div>
+              <span class="chip" style="background: var(--lilac-100); color: var(--purple-700); font-weight: 800; font-size: 11.5px; margin-bottom: 8px; border: 1px solid var(--line);">
+                <i class="fas fa-store"></i> Actores Clave: Vendedores Emprendedores
+              </span>
+              <h4 style="font-size: 15px; font-weight: 800; color: var(--ink); margin: 6px 0 10px 0;">Metas de Captación & Monetización Directa</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--muted); margin: 0 0 14px 0;">
+                Los vendedores son la <strong>oferta local</strong> del campus (brownies, postres, apuntes, servicios). Su retención y formalización en la app impulsa la estabilidad financiera inicial.
+              </p>
+              <ul style="padding-left: 18px; margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.6;">
+                <li><strong>Meta Estratégica:</strong> Captar 10-15 vendedores recurrentes en el piloto de la UNMSM.</li>
+                <li><strong>Monetización Directa:</strong> Pagan la <strong>Suscripción Premium</strong> para tener productos ilimitados fijos.</li>
+                <li><strong>Indicador Clave (KPI):</strong> Tasa de conversión de vendedor gratuito a Premium (~2% a 3% en base).</li>
+              </ul>
+            </div>
+            <div style="margin-top: 16px; background: rgba(var(--purple-500-rgb), 0.04); border-radius: var(--radius-md); padding: 10px 12px; font-size: 12px; border: 1px solid var(--line);">
+              <strong style="color: var(--purple-700); display: block;"><i class="fas fa-arrows-spin"></i> Impacto Financiero:</strong>
+              <span style="color: var(--muted);">Define la base de ingresos recurrentes (Suscripciones). Afecta directamente al **VAN** inicial y la cobertura de costos fijos cloud.</span>
+            </div>
+          </div>
+
+          <!-- CARD COMPRADORES -->
+          <div class="glass-card glowing-border" style="border-left: 5px solid var(--pink); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-soft);">
+            <div>
+              <span class="chip" style="background: var(--pink-soft); color: var(--pink); font-weight: 800; font-size: 11.5px; margin-bottom: 8px; border: 1px solid rgba(244, 93, 187, 0.15);">
+                <i class="fas fa-graduation-cap"></i> Actores Clave: Compradores Universitarios
+              </span>
+              <h4 style="font-size: 15px; font-weight: 800; color: var(--ink); margin: 6px 0 10px 0;">Metas de Tracción & Monetización Indirecta</h4>
+              <p style="font-size: 13px; line-height: 1.5; color: var(--muted); margin: 0 0 14px 0;">
+                Los compradores son la <strong>demanda masiva</strong> del campus (alumnos buscando snacks o copias en el receso). Su volumen de uso y confianza genera tracción comercial.
+              </p>
+              <ul style="padding-left: 18px; margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.6;">
+                <li><strong>Meta Estratégica:</strong> Escalar de 50 beta-testers a 3,500 alumnos activos para el mes 12.</li>
+                <li><strong>Monetización Indirecta:</strong> Generan el tráfico que atrae a la **Publicidad B2C** y las **Micro-comisiones** por garantía segura.</li>
+                <li><strong>Indicador Clave (KPI):</strong> Transacciones mensuales promedio por alumno y retención de uso.</li>
+              </ul>
+            </div>
+            <div style="margin-top: 16px; background: rgba(var(--purple-500-rgb), 0.04); border-radius: var(--radius-md); padding: 10px 12px; font-size: 12px; border: 1px solid var(--line);">
+              <strong style="color: var(--pink); display: block;"><i class="fas fa-arrows-spin"></i> Impacto Financiero:</strong>
+              <span style="color: var(--muted);">Impulsa los ingresos transaccionales (Micro-comisiones) y el valor de banners locales (Ads B2C). Acelera la **TIR** y acorta el **Punto de Equilibrio**.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIMULADOR ESTRATÉGICO DE DECISIONES -->
+        <div class="financial-simulator-panel" style="background: rgba(var(--purple-500-rgb), 0.03); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 24px; display: grid; gap: 20px; box-shadow: var(--shadow-soft);">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px;">
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--purple-700); margin: 0; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-sliders-h"></i> Simulador de Decisiones Financieras en Tiempo Real
+            </h3>
+            <div class="scenario-btn-group" style="display: flex; gap: 8px;">
+              <button class="scenario-btn" data-scenario="pesimista">Escenario Pesimista</button>
+              <button class="scenario-btn active" data-scenario="base">Escenario Medio</button>
+              <button class="scenario-btn" data-scenario="optimista">Escenario Esperanzador</button>
+            </div>
+          </div>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+            <!-- Selector de Suscripción -->
+            <div class="simulator-control-group">
+              <label for="subPriceSelect" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: var(--ink);">
+                <i class="fas fa-id-card-alt" style="color: var(--purple-700); margin-right: 4px;"></i> Suscripción Mensual (Vendedor):
+              </label>
+              <select id="subPriceSelect" class="sim-select" style="width: 100%; background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; outline: none;">
+                <option value="7">S/ 7 al mes (Original)</option>
+                <option value="5">S/ 5 al mes (Intermedio)</option>
+                <option value="3">S/ 3 al mes (Propuesta Karla)</option>
+                <option value="0">S/ 0 al mes (Gratuito)</option>
+              </select>
+            </div>
+            
+            <!-- Selector de Microcomisiones -->
+            <div class="simulator-control-group">
+              <label for="commissionSelect" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: var(--ink);">
+                <i class="fas fa-coins" style="color: var(--gold); margin-right: 4px;"></i> Micro-comisión / Garantía:
+              </label>
+              <select id="commissionSelect" class="sim-select" style="width: 100%; background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; outline: none;">
+                <option value="0.5">S/ 0.50 por txn (Original)</option>
+                <option value="0.2">S/ 0.20 por txn (Bajo costo)</option>
+                <option value="0">S/ 0.00 por txn (Gratuito)</option>
+              </select>
+            </div>
+            
+            <!-- Selector de Costos Operativos -->
+            <div class="simulator-control-group">
+              <label for="costFactorSelect" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: var(--ink);">
+                <i class="fas fa-chart-line" style="color: var(--pink); margin-right: 4px;"></i> Eficiencia en Costos Fijos:
+              </label>
+              <select id="costFactorSelect" class="sim-select" style="width: 100%; background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; outline: none;">
+                <option value="1.0">100% (Costos Normales)</option>
+                <option value="0.5">50% (Eficiencia de Guerrilla)</option>
+                <option value="0.0">0% (Operación Gratuita)</option>
+              </select>
+            </div>
+            
+            <!-- Selector de Conversión a Comprador -->
+            <div class="simulator-control-group">
+              <label for="buyerConvSelect" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: var(--ink);">
+                <i class="fas fa-user-graduate" style="color: var(--pink); margin-right: 4px;"></i> Conversión a Comprador:
+              </label>
+              <select id="buyerConvSelect" class="sim-select" style="width: 100%; background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; outline: none;">
+                <option value="0.8">80% (Alta adopción)</option>
+                <option value="0.6" selected>60% (Línea base)</option>
+                <option value="0.4">40% (Bajo uso)</option>
+                <option value="0.2">20% (Piloto lento)</option>
+              </select>
+            </div>
+
+            <!-- Selector de Conversión a Vendedor -->
+            <div class="simulator-control-group">
+              <label for="sellerConvSelect" style="font-weight: 700; display: block; margin-bottom: 6px; font-size: 13px; color: var(--ink);">
+                <i class="fas fa-store" style="color: var(--purple-700); margin-right: 4px;"></i> Conversión a Vendedor (M12):
+              </label>
+              <select id="sellerConvSelect" class="sim-select" style="width: 100%; background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; outline: none;">
+                <option value="0.05">5.0% (Alta adopción)</option>
+                <option value="0.03" selected>3.0% (Línea base)</option>
+                <option value="0.015">1.5% (Baja adopción)</option>
+                <option value="0.005">0.5% (Mínimo piloto)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- COMPARATIVA DE IMPACTO EN TIEMPO REAL -->
+          <div id="simulationDeltaPanel" style="background: rgba(var(--purple-500-rgb), 0.02); border: 1px solid rgba(var(--purple-500-rgb), 0.1); border-radius: var(--radius-md); padding: 14px; display: grid; gap: 10px;">
+            <div style="font-weight: 800; font-size: 13px; color: var(--ink); display: flex; align-items: center; gap: 6px;">
+              <i class="fas fa-balance-scale" style="color: var(--purple-700);"></i> Impacto de la Simulación vs. Línea Base (Original):
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;" id="simDeltasGrid">
+              <!-- Se cargará de forma dinámica mediante JavaScript -->
+            </div>
+          </div>
         </div>
 
         <!-- CARDS DE METRICAS FINANCIERAS -->
@@ -719,7 +848,7 @@
           </article>
           <article class="chart-card glowing-border">
             <div class="chart-title">
-              <h3>Mix de Ingresos M12</h3>
+              <h3>Mix de Ingresos Anual/M12</h3>
               <span>Suscripciones • Ads • Escrow</span>
             </div>
             <canvas id="revenueMixChart" aria-label="Gráfico de torta de la composición de ingresos al mes 12"></canvas>
@@ -734,6 +863,8 @@
               <tr>
                 <th>Mes</th>
                 <th>Alumnos Activos</th>
+                <th id="sellerActiveTh">Vendedores Activos<br>[%]</th>
+                <th id="buyerActiveTh">Compradores Activos<br>[%]</th>
                 <th>Suscripciones Premium</th>
                 <th>Publicidad B2C</th>
                 <th>Micro-comisiones</th>
@@ -749,6 +880,68 @@
         <div id="costBreakdownCard" class="glass-card glowing-border" style="margin-top: 24px; border-left: 5px solid var(--purple-500);">
           <!-- Se cargará de forma dinámica mediante JavaScript para reflejar cada escenario -->
         </div>
+
+        <!-- GUÍA EDUCATIVA DE RENTABILIDAD: VAN & TIR PARA TODO EL EQUIPO -->
+        <div class="glass-card glowing-border" style="margin-top: 24px; border-left: 5px solid var(--gold); padding: 24px;">
+          <h3 style="font-size: 17px; font-weight: 800; color: var(--gold); margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-graduation-cap"></i> Guía Financiera del Equipo: ¿Por qué nos interesan el VAN y la TIR?
+          </h3>
+          <p style="font-size: 13.5px; line-height: 1.6; color: var(--muted); margin-bottom: 20px;">
+            En UniMarket promovemos la <strong>transparencia radical</strong>. Queremos que todo el equipo (desde marketing hasta desarrollo) entienda la viabilidad de nuestro negocio y persiga el mismo objetivo de sostenibilidad sin necesidad de ser expertos en finanzas.
+          </p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px;">
+            <!-- Explicación del VAN -->
+            <div style="background: rgba(var(--purple-500-rgb), 0.02); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-soft);">
+              <div>
+                <h4 style="font-size: 15px; font-weight: 800; color: var(--purple-700); margin: 0 0 8px 0; display: flex; align-items: center; gap: 6px;">
+                  <span style="background: var(--lilac-100); color: var(--purple-700); width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: 50%; font-size: 11px; font-weight: 800;">1</span>
+                  VAN (Valor Actual Neto)
+                </h4>
+                <div style="margin-bottom: 10px;"><span class="priority-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 700;">¿Es rentable hoy?</span></div>
+                <p style="font-size: 13px; line-height: 1.5; color: var(--muted); margin-bottom: 12px;">
+                  <strong>¿Qué es en palabras sencillas?</strong><br>
+                  El VAN mide cuánta riqueza neta crea el proyecto <em>hoy</em>. Sumamos todos los flujos de dinero futuros que ganaremos mes a mes durante <strong>un año completo (cálculo anual)</strong>, les restamos un factor de pérdida de valor del dinero en el tiempo (tasa de descuento) y le restamos la inversión inicial.
+                </p>
+                <p style="font-size: 12.5px; line-height: 1.5; color: var(--muted); background: var(--card); padding: 10px; border-radius: 6px; border: 1px solid var(--line); font-style: italic; margin-bottom: 0;">
+                  <strong>Fórmula conceptual (Anualizada para Año 1):</strong><br>
+                  VAN = [Suma de flujos futuros mensuales descontados] - Inversión Inicial (S/ 500)<br>
+                  • Si <strong>VAN &gt; 0</strong>: ¡Ganamos dinero real! Aprobado.<br>
+                  • Si <strong>VAN = 0</strong>: Recuperamos justo lo invertido.<br>
+                  • Si <strong>VAN &lt; 0</strong>: Pérdida económica. Rechazado.
+                </p>
+              </div>
+              <div style="margin-top: 14px; background: rgba(16, 185, 129, 0.05); border-left: 3px solid var(--green); padding: 8px 12px; font-size: 12px; color: var(--muted);">
+                <strong>Alineación del equipo:</strong> Nos indica si el esfuerzo de crear el MVP sanmarquino creará valor económico real para reinvertir en la comunidad.
+              </div>
+            </div>
+            
+            <!-- Explicación de la TIR -->
+            <div style="background: rgba(var(--purple-500-rgb), 0.02); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 18px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-soft);">
+              <div>
+                <h4 style="font-size: 15px; font-weight: 800; color: var(--purple-700); margin: 0 0 8px 0; display: flex; align-items: center; gap: 6px;">
+                  <span style="background: var(--lilac-100); color: var(--purple-700); width: 22px; height: 22px; display: inline-grid; place-items: center; border-radius: 50%; font-size: 11px; font-weight: 800;">2</span>
+                  TIR (Tasa Interna de Retorno)
+                </h4>
+                <div style="margin-bottom: 10px;"><span class="priority-badge" style="background: rgba(251, 191, 36, 0.1); color: var(--gold); border: 1px solid rgba(251, 191, 36, 0.2); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 700;">¿A qué velocidad rinde?</span></div>
+                <p style="font-size: 13px; line-height: 1.5; color: var(--muted); margin-bottom: 12px;">
+                  <strong>¿Qué es en palabras sencillas?</strong><br>
+                  La TIR es la tasa de interés anualizada que rinde nuestra inversión en el proyecto. Imagina que en vez de poner S/ 500 en un banco que te da 4% al año, los inviertes en UniMarket. La TIR es el interés real que rinde tu dinero aquí.
+                </p>
+                <p style="font-size: 12.5px; line-height: 1.5; color: var(--muted); background: var(--card); padding: 10px; border-radius: 6px; border: 1px solid var(--line); font-style: italic; margin-bottom: 0;">
+                  <strong>Criterio de decisión clave:</strong><br>
+                  Comparamos la TIR con la tasa del banco o del inversionista (COK = 1% mensual o 12.68% anual):<br>
+                  • Si <strong>TIR &gt; COK</strong>: El proyecto es excelente y rinde más que cualquier cuenta de ahorros.<br>
+                  • Si <strong>TIR &lt; COK</strong>: Es mejor dejar el dinero en el banco.
+                </p>
+              </div>
+              <div style="margin-top: 14px; background: rgba(251, 191, 36, 0.05); border-left: 3px solid var(--gold); padding: 8px 12px; font-size: 12px; color: var(--muted);">
+                <strong>Alineación del equipo:</strong> Nos desafía a acelerar el crecimiento del piloto para superar las tasas pasivas tradicionales del mercado financiero.
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div class="assumption-grid">
           <article>

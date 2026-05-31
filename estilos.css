@@ -2434,3 +2434,116 @@ html[data-theme="shadcn"] .quick-palette-dot.active {
     border-color: #000000;
   }
 }
+
+.finance-kpis {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+@media (max-width: 1024px) {
+  .finance-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 600px) {
+  .finance-kpis {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   SIMULADOR DE DECISIONES Y COMPACTACIÓN DE TABLA FINANCIERA (UX/UI OVERRIDES)
+   ========================================================================== */
+
+/* Compactar verticalmente y ajustar tamaño de fuente para que quepan los 12 meses */
+#cashflowTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px !important;
+  line-height: 1.15 !important;
+  margin-top: 10px;
+}
+
+#cashflowTable th {
+  padding: 6px 8px !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .05em !important;
+  text-align: center !important;
+}
+
+#cashflowTable td {
+  padding: 5px 8px !important;
+  font-size: 12.5px !important;
+  height: auto !important;
+  text-align: right !important;
+}
+
+/* Forzar Mes X a estar en una sola línea */
+#cashflowTable td:nth-child(1),
+#cashflowTable th:nth-child(1) {
+  white-space: nowrap !important;
+  text-align: left !important;
+  font-weight: 700;
+  color: var(--ink) !important;
+}
+
+#cashflowTable td:nth-child(2),
+#cashflowTable th:nth-child(2) {
+  text-align: center !important;
+}
+
+/* Coloreado de columnas: Ingresos (Revenues) */
+#cashflowTable td:nth-child(5), #cashflowTable th:nth-child(5),
+#cashflowTable td:nth-child(6), #cashflowTable th:nth-child(6),
+#cashflowTable td:nth-child(7), #cashflowTable th:nth-child(7) {
+  background-color: rgba(16, 185, 129, 0.05) !important; /* Verde muy sutil */
+}
+
+/* Separador vertical discontinuo a la derecha de microcomisiones (Columna 7) */
+#cashflowTable td:nth-child(7),
+#cashflowTable th:nth-child(7) {
+  border-right: 2px dashed rgba(124, 58, 237, 0.25) !important;
+}
+
+/* Coloreado de columnas: Egresos (Costs) */
+#cashflowTable td:nth-child(8), #cashflowTable th:nth-child(8) {
+  background-color: rgba(239, 68, 68, 0.05) !important; /* Rojo muy sutil */
+}
+
+/* Coloreado de columnas: Flujo Neto */
+#cashflowTable td:nth-child(9), #cashflowTable th:nth-child(9) {
+  background-color: rgba(124, 58, 237, 0.04) !important; /* Violeta muy sutil */
+  font-weight: 800 !important;
+}
+
+/* Efecto hover sobre las filas sin arruinar los colores de las columnas */
+#cashflowTable tbody tr:hover td {
+  background: rgba(var(--purple-500-rgb), 0.08) !important;
+}
+
+/* Premium Styles for select dropdown inside simulation panel */
+.financial-simulator-panel select.sim-select {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  color: var(--ink);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+}
+
+.financial-simulator-panel select.sim-select:hover {
+  border-color: var(--purple-500);
+  background: var(--lilac-100);
+}
+
+.financial-simulator-panel select.sim-select:focus {
+  border-color: var(--purple-700);
+  box-shadow: 0 0 0 3px rgba(var(--purple-500-rgb), 0.15);
+}
+
